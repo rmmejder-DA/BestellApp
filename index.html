@@ -9,55 +9,44 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="./assets/standard.css">
+    <link rel="stylesheet" href="./styles/media.css">
     <link rel="icon" type="image/png" href="assets/image/Favicon.jpg">
 
-    <script src="script.js"></script>
+    <script src="./scripts/db.js"></script>
     <script src="./scripts/template.js"></script>
+
+    <script src="script.js"></script>
+
 </head>
 
 <body onload="render()">
     <header>
         <div class="header_container">
             <img class="LogoLinksHeader" src="./assets/image/LogoLinksHeader.png" alt="LogoLinksHeader">
-            <div id="shopping-cart-open" class="menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <div onclick="openCart()" id="shopping-cart-open" class="basket"></div>
         </div>
     </header>
     <div class="imgunderheader">
-        <img class="BigImage" src="./assets/image/BigImage.jpg" alt="Bannerbild des BurgerHaus Restaurants">
-        <img class="burgerImage" src="./assets/image/BurgerLogo.png" alt="BurgerHaus logo">
+
+        <div>
+            <img class="BigImage" src="./assets/image/BigImage.jpg" alt="Bannerbild des BurgerHaus Restaurants">
+        </div>
+        <div class="BI">
+            <img class="burgerImage" src="./assets/image/BurgerLogo.png" alt="BurgerHaus logo">
+        </div>
     </div>
 
     <div class="underH1">
-        <div class="BurgerHausplusRezension">
-            <h1>BurgerHaus</h1>
-            <p id="Rezension">stern Bewertung</p>
-        </div>
-        <b>Leckere Möglichkeiten satt zu werden</b>
+        <div class="BurgerHausplusRezension" id="rateStar"></div>
     </div>
-        <main>
-    <section id="MenuContent" class="menu-content">
+    <main>
+        <section id="MenuContent" class="menu-content"></section>
 
-        
-    </section>
-
-    <section class="shoppingcartsection" id="shoppingcartsection">
-        <div>
-            <h2>Warenkorb</h2>
-            <div id="shopping-cart"></div>
-        </div>
-        <div class="total-price-container">
-            <h3>Gesamtpreis: <span id="total-price">0.00</span> €</h3>
-            <button id="checkout-button">Zur Kasse</button>
-        </div>
-    </section>
-</main>
+        <section class="shoppingcartsection openCart" id="shoppingcartsection"></section>
+    </main>
     <footer>
         <div class="footer_container">
-            <p>&copy; 2025 BurgerHaus</p>
+            <a>&copy; 2025 BurgerHaus</a>
 
             <div class="footer_links">
                 <a href="javascript:void(0)" role="button">Imprint</a>
@@ -66,5 +55,9 @@
         </div>
     </footer>
 </body>
+<script>
+
+
+</script>
 
 </html>
