@@ -1,9 +1,91 @@
-@media (max-width:600px){
-    
+@media (max-width:430px) {
+    .burgerImage {
+        width: 120px;
+        height: 120px;
+    }
+
+    .footer_links {
+        display: none;
+    }
+
+    .LogoLinksHeader {
+        margin-left: 20px;
+    }
+
+    .header_container,
+    .footer_container {
+        padding-inline: 5px;
+    }
+    .shoppingcartimage {
+        width: 50px;
+        height: 30px;
+    }
+    .burgerSmallImage,
+    .pizzaSmallImage,
+    .saladSmallImage {
+        width: 100px;
+        height: 100px;
+    }
 }
-@media (max-width:850px){
+
+@media (max-width:600px) {
+    a {
+        font-size: 16px;
+        padding: 5px 8px;
+    }
+
+    h2 {
+        font-size: 36px;
+        line-height: 110%;
+    }
+
+    h1 {
+        font-size: 36px;
+        margin-bottom: 8px;
+    }
+
+    .burger-content-image {
+        width: 180px;
+        height: 90px;
+    }
+
+    .burgerImage {
+        width: 150px;
+        height: 150px;
+    }
+    .basket_cart{
+        position: static;
+    }
+}
+
+@media (max-width:850px) {
     .menu-item {
         display: grid;
         justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .add-to-cart-button {
+        margin: 10px auto 10px auto;
+    }
+
+    .burgerSmallImage,
+    .pizzaSmallImage,
+    .saladSmallImage {
+        width: 120px;
+        height: 120px;
+        margin-left: 20px;
+    }
+    .description-text {
+        padding: 10px;
+        width: unset!important;
+    }
+}
+@media (max-width:1030px) {
+    .description-text {
+        padding: 10px;
+        width: 230px;
     }
 }

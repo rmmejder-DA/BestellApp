@@ -1,10 +1,10 @@
 .LogoLinksHeader {
     display: flex;
     align-items: center;
-    padding: 0 20px;
     width: 200px;
     object-fit: cover;
     object-position: center;
+    margin-left: 60px;
 }
 
 .imgunderheader {
@@ -20,6 +20,8 @@
     height: 500px;
     object-fit: cover;
     object-position: center;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .burgerImage {
@@ -90,8 +92,8 @@
 .burgerSmallImage,
 .pizzaSmallImage,
 .saladSmallImage {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
 }
 
 .shoppingcartsection {
@@ -106,6 +108,7 @@
     width: 530px;
     height: 700px;
     z-index: 1000;
+    transform-style: preserve-3d;
 }
 
 .basket {
@@ -113,12 +116,22 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    margin-right: 16px;
     width: 200px;
     height: 100px;
     position: sticky;
 }
-.remove-all-button{
+.basket:hover::after{
+    content: 'Warenkorb';
+    position: absolute;
+    background-color: transparent;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    top: 80px;
+}
+
+.remove-all-button {
     cursor: pointer;
     background-color: #e71f1f;
     color: white;
@@ -127,18 +140,22 @@
     border-radius: 5px;
     font-size: 16px;
 }
-.remove-all-button:hover{
+
+.remove-all-button:hover {
     background-color: #c50f0f;
 }
+
 .total-removeall {
     display: flex;
     flex-direction: column;
 }
+
 .cart-empty {
     text-align: center;
     position: absolute;
     display: contents;
 }
+
 .cart-empty b {
     font-size: 18px;
     color: #ffffff;
@@ -149,7 +166,6 @@
     width: 60px;
     height: 40px;
     cursor: pointer;
-    margin-right: 16px;
 }
 
 .menu-content {
@@ -205,6 +221,7 @@
     font-size: 16px;
     width: 200px;
 }
+
 .add-to-cart-button:hover {
     background-color: #c65a1b;
 }
@@ -300,16 +317,19 @@
     border-top-right-radius: 25%;
     height: 72px;
 }
+
 .basket_footer h3 {
     font-size: 20px;
     color: #ffffff;
 }
+
 .basket_header {
     height: 72px;
     border-bottom-left-radius: 25%;
     border-bottom-right-radius: 25%;
     position: relative;
 }
+
 .basket_header h2 {
     font-size: 24px;
     color: #ffffff;
@@ -320,8 +340,20 @@
 .stars {
     display: flex;
     cursor: pointer;
+    position: relative;
 }
 
+.stars:hover::after{
+    content: 'Bewerten Sie uns';
+    position: absolute;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    width: max-content;
+    bottom: 40px;
+    background-color: transparent;
+    left: 50%;
+    transform: translateX(-50%);
+}
 .star {
     font-size: 2rem;
     color: gray;
@@ -329,6 +361,10 @@
 }
 
 .star.active {
+    color: gold;
+}
+
+.star~.star:hover {
     color: gold;
 }
 
@@ -343,6 +379,7 @@
     flex-wrap: wrap;
     gap: 20px;
     margin-bottom: 20px;
+    padding-inline: 10px;
 }
 
 .price {

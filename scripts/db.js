@@ -4,7 +4,7 @@ let burger = {
         { "id": 1, "image": "SmokeBurger.jpg", "name": "Classic Burger", "price": 5.99 , "Beschreibung": "Saftiger Rindfleisch-Patty mit frischem Salat,<br> Tomate, Zwiebeln und unserer speziellen Sauce."},
         { "id": 2, "image": "CheeseBurger.jpg", "name": "Cheese Burger", "price": 6.49 , "Beschreibung": "Köstlicher Burger mit geschmolzenem Cheddar-Käse,<br> Salat, Tomate und Zwiebeln."},
         { "id": 3, "image": "BaconBurger.jpg", "name": "Bacon Burger", "price": 6.99 , "Beschreibung": "Leckerer Burger mit knusprigem Bacon,<br> Salat, Tomate, Zwiebeln und BBQ-Sauce."},
-        { "id": 4, "image": "DoubleBurger.jpg", "name": "Double Burger", "price": 7.49 , "Beschreibung": "Doppelter Genuss mit zwei Rindfleisch-Patties,<br> Salat, Tomate, Zwiebeln und unserer speziellen Sauce."}
+        { "id": 4, "image": "DoubleBurger.jpg", "name": "Double Burger", "price": 7.49 , "Beschreibung": "Doppelter Genuss mit zwei Rindfleisch-Patties,<br> Salat, Tomate, Zwiebeln und<br> unserer speziellen Sauce."}
     ]
 };
 

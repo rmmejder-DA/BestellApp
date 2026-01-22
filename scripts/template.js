@@ -6,7 +6,45 @@ function openCart() {
     } else {
         cartSection.style.display = 'none';
     }
+    // Animationsfunktion für das Erscheinen des Warenkorbs
+    let appear = (element, duration, translateXStart, translateXEnd) => {
+        element.style.transition = `transform ${duration}ms ease-out, opacity ${duration}ms ease-out`;
+        element.style.transform = `translateX(${translateXStart}px)`;
+        element.style.opacity = '0';
+        requestAnimationFrame(() => {
+            element.style.transform = `translateX(${translateXEnd}px)`;
+            element.style.opacity = '1';
+        }
+        );
+    }
+    appear(document.getElementById('shoppingcartsection'), 500, 1000, 0 );// Beispielwerte für Dauer und Y-Translation
+    if (!cartSection) return;
+    function handleClick(event) {
+        if (
+            !cartSection.contains(event.target) &&
+            event.target.id !== 'shopping-cart-open' &&
+            !event.target.classList.contains('shoppingcartimage') &&
+            !event.target.classList.contains('basket_cart')
+        ) {
+            cartSection.style.display = 'none';
+        }
+        requestAnimationFrame(() => {
+            cartSection.style.transform = `translateX(0px)`;
+            cartSection.style.opacity = '1';
+        });
+    }
+    window.addEventListener('click', handleClick);
 }
+
+function closeCart() {
+    let cartSection = document.getElementById('shoppingcartsection');
+    if (cartSection) {
+        cartSection.style.display = 'none';
+    }
+}
+
+window.addEventListener('DOMContentLoaded', closeCart);
+
 
 function removeAll() {
     cart = [];
@@ -23,6 +61,7 @@ function render() {
     let shoppingCart = document.getElementById('shopping-cart-open');
     let cartSection = document.getElementById('shoppingcartsection');
     let ratingElement = document.getElementById('rateStar');
+
     if (!ratingElement || !shoppingCart || !cartSection) return;
 
     ratingElement.innerHTML = `
@@ -35,7 +74,7 @@ function render() {
                         <span class="star" data-value="5">★</span>
                     </div>
                         <i id="rating-output">Rating: 0/5</i>
-                    <b>Leckere Möglichkeiten zu entspannen</b>`
+                    <b>Comfort Food</b>`
     shoppingCart.innerHTML =
         `<span class="basket_cart" id="cart-count">0</span>
         <img class="shoppingcartimage" src="./assets/image/shoppingcar.png" alt="Warenkorb Icon">
@@ -51,7 +90,7 @@ function render() {
         <footer class="basket_footer">
         <div class="total-removeall">
         <h3 id="total-price">Gesamtpreis: 0,00 €</h3>
-        <button onclick="removeAll()" class="remove-all-button">Alles entfernen</button>
+        <button onclick="removeAll()" class="remove-all-button" id="remove-all-button">Alles entfernen</button>
         </div>
         <button onclick="Payment()" class="payment-button">Pay</button>
         </footer>
@@ -121,14 +160,16 @@ function setupStarRating() {
 
 function addToCart(categoryIndex, itemIndex, button) {
     let selectedItem = menu[categoryIndex].items[itemIndex];
+
     if (button) {
         button.textContent = "Hinzugefügt!";
     }
     if (selectedItem && selectedItem.id) {
         cart.push(selectedItem);
         updateCart();
-    }
+    };
 }
+
 function addCart(itemId) {
     let item = cart.find(cartItem => cartItem.id === itemId);
     if (item) {
@@ -136,6 +177,7 @@ function addCart(itemId) {
         updateCart();
     }
 }
+
 function removeFromCart(itemId) {
     let index = cart.findIndex(item => item.id === itemId);
     if (index !== -1) {
@@ -175,7 +217,12 @@ function updateCart() {
         }
         totalPrice += item.price;
     });
-
+    let removeAllButton = document.getElementById('remove-all-button');
+    if (cart.length === 0) {
+        removeAllButton.style.display = 'none';
+    } else {
+        removeAllButton.style.display = 'block';
+    }
     if (cartItems) {
         let cartItemsHTML = '';
         itemMap.forEach(entry => {
