@@ -120,7 +120,8 @@
     height: 100px;
     position: sticky;
 }
-.basket:hover::after{
+
+.basket:hover::after {
     content: 'Warenkorb';
     position: absolute;
     background-color: transparent;
@@ -150,16 +151,19 @@
     flex-direction: column;
 }
 
-.cart-empty {
-    text-align: center;
-    position: absolute;
-    display: contents;
-}
-
-.cart-empty b {
+.cart-count {
     font-size: 18px;
     color: #ffffff;
+    text-align: center;
+    text-shadow: #ffffff40 1px 1px 2px;
+}
+
+.cart-empty {
+    font-size: 22px;
+    color: #ffffff;
     margin-top: 20px;
+    text-align: center;
+    text-shadow: #ffffff40 1px 1px 2px;
 }
 
 .shoppingcartimage {
@@ -269,14 +273,32 @@
 
 .remove-button {
     cursor: pointer;
-    background-color: #e71f1f;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 50%;
     font-size: 16px;
     width: 32px;
     height: 32px;
+    background-color: transparent;
+    border: none;
+    filter: hue-rotate(80deg);
+}
+
+.remove-button:hover {
+    filter: hue-rotate(4deg);
+    transform: scale(1.1);
+}
+
+.add-button {
+    cursor: pointer;
+    font-size: 16px;
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    border: none;
+    filter: invert(100%);
+}
+
+.add-button:hover {
+    filter: invert(50%);
+    transform: scale(1.1);
 }
 
 .basketPay {
@@ -331,7 +353,7 @@
 }
 
 .basket_header h2 {
-    font-size: 24px;
+    font-size: 28px;
     color: #ffffff;
     text-align: center;
     padding-top: 20px;
@@ -343,7 +365,7 @@
     position: relative;
 }
 
-.stars:hover::after{
+.stars:hover::after {
     content: 'Bewerten Sie uns';
     position: absolute;
     color: rgb(0, 0, 0);
@@ -354,6 +376,7 @@
     left: 50%;
     transform: translateX(-50%);
 }
+
 .star {
     font-size: 2rem;
     color: gray;
@@ -369,7 +392,7 @@
 }
 
 .description-text {
-    font-size: 16px;
+    font-size: 20px;
     color: #363534;
     margin-top: 10px;
 }

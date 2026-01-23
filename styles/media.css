@@ -26,9 +26,32 @@
         width: 100px;
         height: 100px;
     }
+    p {
+        font-size: 16px;
+    }
+    b {
+        font-size: 18px;    
+    }
+    .cartall{
+        margin: 0;
+
+    }
+    .basket_footer h3{
+        font-size: 16px;}
+        .remove-all-button {
+            padding: 5px 5px;
+        }
 }
 
 @media (max-width:600px) {
+    .shoppingcartsection{
+        width: 100%;
+        height: 600px;
+        top: 95px;
+    }
+        .description-text {
+        font-size: 16px;
+    }
     a {
         font-size: 16px;
         padding: 5px 8px;
@@ -59,12 +82,15 @@
 }
 
 @media (max-width:850px) {
+    .burger-content-image {
+        width: 100%;
+        height: 200px;
+    }
     .menu-item {
         display: grid;
         justify-content: center;
         align-items: center;
         text-align: center;
-        padding: 10px;
     }
 
     .add-to-cart-button {
@@ -82,10 +108,17 @@
         padding: 10px;
         width: unset!important;
     }
+    b {
+        font-size: 20px;    
+    width: 32px;}
+        .description-text {
+        font-size: 20px;
+    }
 }
 @media (max-width:1030px) {
     .description-text {
         padding: 10px;
         width: 230px;
+        font-size: 22px;
     }
 }

@@ -1,60 +1,3 @@
-function openCart() {
-    let cartSection = document.getElementById('shoppingcartsection');
-
-    if (cartSection.style.display === 'none' || cartSection.style.display === '') {
-        cartSection.style.display = 'block';
-    } else {
-        cartSection.style.display = 'none';
-    }
-    // Animationsfunktion für das Erscheinen des Warenkorbs
-    let appear = (element, duration, translateXStart, translateXEnd) => {
-        element.style.transition = `transform ${duration}ms ease-out, opacity ${duration}ms ease-out`;
-        element.style.transform = `translateX(${translateXStart}px)`;
-        element.style.opacity = '0';
-        requestAnimationFrame(() => {
-            element.style.transform = `translateX(${translateXEnd}px)`;
-            element.style.opacity = '1';
-        }
-        );
-    }
-    appear(document.getElementById('shoppingcartsection'), 500, 1000, 0 );// Beispielwerte für Dauer und Y-Translation
-    if (!cartSection) return;
-    function handleClick(event) {
-        if (
-            !cartSection.contains(event.target) &&
-            event.target.id !== 'shopping-cart-open' &&
-            !event.target.classList.contains('shoppingcartimage') &&
-            !event.target.classList.contains('basket_cart')
-        ) {
-            cartSection.style.display = 'none';
-        }
-        requestAnimationFrame(() => {
-            cartSection.style.transform = `translateX(0px)`;
-            cartSection.style.opacity = '1';
-        });
-    }
-    window.addEventListener('click', handleClick);
-}
-
-function closeCart() {
-    let cartSection = document.getElementById('shoppingcartsection');
-    if (cartSection) {
-        cartSection.style.display = 'none';
-    }
-}
-
-window.addEventListener('DOMContentLoaded', closeCart);
-
-
-function removeAll() {
-    cart = [];
-    let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
-
-    AddToCartButton.forEach(button => {
-        button.textContent = "In den Warenkorb";
-    });
-    updateCart();
-}
 
 function render() {
     let menuContentRef = document.getElementById('MenuContent');
@@ -79,7 +22,6 @@ function render() {
         `<span class="basket_cart" id="cart-count">0</span>
         <img class="shoppingcartimage" src="./assets/image/shoppingcar.png" alt="Warenkorb Icon">
                 `;
-
     cartSection.innerHTML =
         `<div class="basketPay">
         <header class="basket_header">
@@ -110,8 +52,7 @@ function render() {
                 <div class="allContent" id="${menu[i].name.toLowerCase()}-content">`;
 
             for (let j = 0; j < menu[i].items.length; j++) {
-
-                menuHTML +=
+                menuContentRef.innerHTML +=
                     `<div class="menu-item">
                     <div class="overlay">
                     <img class="burger-content-image" src="${imgAssetsPath}${menu[i].items[j].image}" alt="${menu[i].items[j].name}">
@@ -121,155 +62,6 @@ function render() {
                     <button onclick="addToCart(${i}, ${j}, this)" class="add-to-cart-button">In den Warenkorb</button>
                 </div>`;
             }
-            menuHTML += `</div></div>`;
-        }
-        menuContentRef.innerHTML = menuHTML;
-    }
-}
-
-function setupStarRating() {
-    let stars = document.querySelectorAll('.star');
-    let output = document.getElementById('rating-output');
-    let savedRating = localStorage.getItem('burgerHausRating');
-
-    if (savedRating) {
-        let rating = parseInt(savedRating);
-        for (let i = 0; i < rating; i++) {
-            stars[i].classList.add('active');
-        }
-        output.textContent = `Rating: ${rating}/5`;
-    }
-
-    stars.forEach((star, index) => {
-        star.addEventListener('click', () => {
-            // Reset all stars
-            stars.forEach(s => s.classList.remove('active'));
-
-            // Highlight selected stars
-            for (let i = 0; i <= index; i++) {
-                stars[i].classList.add('active');
-            }
-
-            // Update rating output
-            const rating = index + 1;
-            output.textContent = `Rating: ${rating}/5`;
-            saveRate(rating);
-        });
-    });
-}
-
-function addToCart(categoryIndex, itemIndex, button) {
-    let selectedItem = menu[categoryIndex].items[itemIndex];
-
-    if (button) {
-        button.textContent = "Hinzugefügt!";
-    }
-    if (selectedItem && selectedItem.id) {
-        cart.push(selectedItem);
-        updateCart();
-    };
-}
-
-function addCart(itemId) {
-    let item = cart.find(cartItem => cartItem.id === itemId);
-    if (item) {
-        cart.push(item);
-        updateCart();
-    }
-}
-
-function removeFromCart(itemId) {
-    let index = cart.findIndex(item => item.id === itemId);
-    if (index !== -1) {
-        cart.splice(index, 1);
-    }
-    if (cart.length === 0) {
-        let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
-        AddToCartButton.forEach(button => {
-            button.textContent = "In den Warenkorb";
-        });
-    }
-    updateCart();
-}
-
-function updateCart() {
-    let cartEmpty = document.getElementById('cart_empty');
-    if (cartEmpty) {
-        if (cart.length === 0) {
-            cartEmpty.innerHTML = `<b>Ihr Warenkorb ist leer</b>`;
-        } else {
-            cartEmpty.innerHTML = ``;
         }
     }
-    let cartCount = document.getElementById('cart-count');
-    cartCount.style.display = cart.length > 0 ? 'block' : 'none';
-    if (cartCount) cartCount.textContent = cart.length;
-
-    let cartItems = document.getElementById('cart-items');
-    let totalPrice = 0;
-    if (!cartItems) return;
-    let itemMap = new Map();
-    cart.forEach(item => {
-        if (itemMap.has(item.id)) {
-            itemMap.get(item.id).count++;
-        } else {
-            itemMap.set(item.id, { item: item, count: 1 });
-        }
-        totalPrice += item.price;
-    });
-    let removeAllButton = document.getElementById('remove-all-button');
-    if (cart.length === 0) {
-        removeAllButton.style.display = 'none';
-    } else {
-        removeAllButton.style.display = 'block';
-    }
-    if (cartItems) {
-        let cartItemsHTML = '';
-        itemMap.forEach(entry => {
-            cartItemsHTML += `<div class="cartall">
-
-            <p>${entry.item.name} - € ${entry.item.price.toFixed(2)}</p>
-            <div class="cart-buttons">
-            <button class="remove-button" onclick="addCart(${entry.item.id})">+</button>
-                        <b class="cart-count">${entry.count}x</b>
-            <button class="remove-button" onclick="removeFromCart(${entry.item.id})">-</button>  
-            </div>        
-    
-            </div>`;
-        });
-        cartItems.innerHTML = cartItemsHTML;
-    }
-
-    let totalPriceEl = document.getElementById('total-price');
-    if (totalPriceEl) totalPriceEl.textContent = `Gesamtpreis: ${totalPrice.toFixed(2)} €`;
 }
-
-function Payment() {
-    if (cart.length === 0) {
-        alert("Ihr Warenkorb ist leer.");
-        return;
-    }
-    alert("Vielen Dank für Ihre Bestellung! Ihre Zahlung wurde erfolgreich verarbeitet.");
-    cart = [];
-    updateCart();
-}
-function ratingDeineObjektID(rating) {
-    let ratingElement = document.getElementById('rating');
-    rating = Math.max(0, Math.min(5, rating));
-
-    if (ratingElement) {
-        let stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
-
-        ratingElement.style.color = 'gold';
-        ratingElement.innerHTML = `${stars} <div class='Rate'>(${rating} von 5 Sternen)</div>`;
-    }
-}
-
-function saveRate(rating) {
-    localStorage.setItem('burgerHausRating', rating);
-}
-
-window.onload = function () {
-    render();
-};
-

@@ -75,6 +75,13 @@ b {
     font-size: 24px;
     color: #e76c1f;
     text-shadow: #c7c7c7 1px 1px 2px;
+    width: 42px;
+}
+
+.BurgerHausplusRezension b {
+    font-size: 28px;
+    width: 100%;
+    text-align: center;
 }
 
 h1 {
