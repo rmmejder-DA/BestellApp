@@ -108,7 +108,6 @@
     width: 530px;
     height: 700px;
     z-index: 1000;
-    transform-style: preserve-3d;
 }
 
 .basket {
@@ -175,12 +174,31 @@
 .menu-content {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 20px;
     width: 100%;
-    margin: 0 auto;
+    margin: 20px auto;
     height: 100%;
 }
-
+.cart-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin: 20px auto;
+    height: 100%;
+}
+.thankyouimage {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+    margin-bottom: 20px;
+    animation: moveImage 3s infinite alternate;
+}
+    @keyframes moveImage {
+        0%   { transform: translateY(-100px); }
+        100% { transform: translateY(10px); }
+    }
 .menu-item {
     display: flex;
     justify-content: space-between;
@@ -192,6 +210,7 @@
     margin: 0 auto;
     border-radius: 8px;
     margin-top: 30px;
+    box-shadow: 0 4px 8px 0 #00000020;
 }
 
 .menu-item span {
@@ -344,14 +363,34 @@
     font-size: 20px;
     color: #ffffff;
 }
-
+.close-cart-button {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    font-weight: 900;
+}
+.close-cart-button:hover {
+    color: #f2ff00;
+}
 .basket_header {
+    display: flex;
+    justify-content: space-around;
     height: 72px;
     border-bottom-left-radius: 25%;
     border-bottom-right-radius: 25%;
     position: relative;
 }
-
+.order{
+display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
 .basket_header h2 {
     font-size: 28px;
     color: #ffffff;
@@ -392,7 +431,7 @@
 }
 
 .description-text {
-    font-size: 20px;
+    font-size: 24px;
     color: #363534;
     margin-top: 10px;
 }

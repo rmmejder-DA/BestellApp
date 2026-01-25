@@ -16,42 +16,63 @@
     .footer_container {
         padding-inline: 5px;
     }
+    .description-text {
+        font-size: 18px!important;
+    }
+    .maxwidth1440 {
+        gap: 20px;
+    }
     .shoppingcartimage {
         width: 50px;
         height: 30px;
     }
+
     .burgerSmallImage,
     .pizzaSmallImage,
     .saladSmallImage {
         width: 100px;
         height: 100px;
     }
+
     p {
         font-size: 16px;
     }
+
     b {
-        font-size: 18px;    
+        font-size: 18px;
     }
-    .cartall{
+
+    .cartall {
         margin: 0;
 
     }
-    .basket_footer h3{
-        font-size: 16px;}
-        .remove-all-button {
-            padding: 5px 5px;
-        }
+
+    .basket_footer h3 {
+        font-size: 16px;
+    }
+
+    .remove-all-button {
+        padding: 5px 5px;
+    }
 }
 
 @media (max-width:600px) {
-    .shoppingcartsection{
+    .basket {
+        padding-right: 20px;
+        justify-content: end;
+    }
+    .shoppingcartsection {
         width: 100%;
         height: 600px;
         top: 95px;
     }
-        .description-text {
+    .LogoLinksHeader {
+        margin-left: 10px;
+    }
+    .description-text {
         font-size: 16px;
     }
+
     a {
         font-size: 16px;
         padding: 5px 8px;
@@ -76,7 +97,8 @@
         width: 150px;
         height: 150px;
     }
-    .basket_cart{
+
+    .basket_cart {
         position: static;
     }
 }
@@ -86,6 +108,7 @@
         width: 100%;
         height: 200px;
     }
+
     .menu-item {
         display: grid;
         justify-content: center;
@@ -104,17 +127,22 @@
         height: 120px;
         margin-left: 20px;
     }
+
     .description-text {
         padding: 10px;
-        width: unset!important;
+        width: unset !important;
     }
+
     b {
-        font-size: 20px;    
-    width: 32px;}
-        .description-text {
+        font-size: 20px;
+        width: 32px;
+    }
+
+    .description-text {
         font-size: 20px;
     }
 }
+
 @media (max-width:1030px) {
     .description-text {
         padding: 10px;

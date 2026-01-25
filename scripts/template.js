@@ -4,7 +4,6 @@ function render() {
     let shoppingCart = document.getElementById('shopping-cart-open');
     let cartSection = document.getElementById('shoppingcartsection');
     let ratingElement = document.getElementById('rateStar');
-
     if (!ratingElement || !shoppingCart || !cartSection) return;
 
     ratingElement.innerHTML = `
@@ -17,17 +16,19 @@ function render() {
                         <span class="star" data-value="5">★</span>
                     </div>
                         <i id="rating-output">Rating: 0/5</i>
-                    <b>Comfort Food</b>`
+                    <b>Comfort Food</b>`;
     shoppingCart.innerHTML =
         `<span class="basket_cart" id="cart-count">0</span>
-        <img class="shoppingcartimage" src="./assets/image/shoppingcar.png" alt="Warenkorb Icon">
-                `;
+        <img class="shoppingcartimage" src="./assets/image/shoppingcar.png" alt="Warenkorb Icon">`;
+
     cartSection.innerHTML =
         `<div class="basketPay">
         <header class="basket_header">
         <h2>Warenkorb</h2>
+        <button onclick="closeCart()" class="close-cart-button" id="close-cart-button">&#10005;</button>
         </header>
         <div id="cart_empty" class="cart-empty"></div>
+        <div id="order" class="order"></div>
         <div id="cart-items" class="cart-items"></div>
         <footer class="basket_footer">
         <div class="total-removeall">
@@ -52,7 +53,7 @@ function render() {
                 <div class="allContent" id="${menu[i].name.toLowerCase()}-content">`;
 
             for (let j = 0; j < menu[i].items.length; j++) {
-                menuContentRef.innerHTML +=
+                menuHTML +=
                     `<div class="menu-item">
                     <div class="overlay">
                     <img class="burger-content-image" src="${imgAssetsPath}${menu[i].items[j].image}" alt="${menu[i].items[j].name}">
@@ -62,6 +63,8 @@ function render() {
                     <button onclick="addToCart(${i}, ${j}, this)" class="add-to-cart-button">In den Warenkorb</button>
                 </div>`;
             }
+            menuHTML += `</div></div>`;
         }
+        menuContentRef.innerHTML = menuHTML;
     }
 }
