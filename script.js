@@ -25,6 +25,7 @@ function Payment() {
 
     let orderontheway = document.getElementById('order');
     let cartEmpty = document.getElementById('cart_empty');
+    cartEmpty.innerHTML = ``;
     if (cart.length === 0) {
         cartEmpty.innerHTML = "Ihr Warenkorb ist leer. Bitte fügen Sie Artikel hinzu, bevor Sie zur Kasse gehen.";
         return;

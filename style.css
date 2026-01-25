@@ -151,7 +151,7 @@
 }
 
 .cart-count {
-    font-size: 18px;
+    font-size: 16px;
     color: #ffffff;
     text-align: center;
     text-shadow: #ffffff40 1px 1px 2px;
@@ -429,7 +429,14 @@ display: flex;
 .star~.star:hover {
     color: gold;
 }
-
+.remove-from-cart-button {
+    cursor: pointer;
+    font-size: 20px;
+    color: #e71f1f;
+    background-color: transparent;
+    border: none;
+    margin-left: 10px;
+}
 .description-text {
     font-size: 24px;
     color: #363534;
