@@ -9,7 +9,7 @@ header {
     background-color: #e76c1f;
     width: 100%;
     position: fixed;
-    z-index: 100;
+    z-index: 1001;
 }
 
 footer {
@@ -112,11 +112,14 @@ h3 {
     font-family: 'Palanquin', sans-serif;
 }
 
-main {
-    flex: 1;
+.main_section {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    background-color: #ffffff;
+    height: auto;
+}
+
+.basketBig {
+    height: 100vh;
+    position: sticky;
+    top: 128px;
 }

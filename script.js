@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let cartSection = document.getElementById('shoppingcartsection');
     if (closeCartButton && cartSection) {
         closeCartButton.addEventListener('click', () => {
-            cartSection.style.display = 'none';
+            cartSection.style.display = 'block';
         });
     }
 });
@@ -111,50 +111,6 @@ function removeAllBtn() {
             removeAllButton.style.display = 'block';
         }
     }
-}
-function openCart() {
-    let cartSection = document.getElementById('shoppingcartsection');
-
-    if (cartSection.style.display === 'none' || cartSection.style.display === '') {
-        cartSection.style.display = 'block';
-    } else {
-        cartSection.style.display = 'none';
-    }
-    appear(cartSection, 1500, 1000, 0);
-    cartSection.addEventListener('click', (event) => {
-        if (event.target === cartSection) {
-            cartSection.style.display = 'none';
-        }
-    });
-}
-function appear(element, duration, translateXStart, translateXEnd) {
-    element.style.transition = `transform ${duration}ms ease-out, opacity ${duration}ms ease-out`;
-    element.style.transform = `translateX(${translateXStart}px)`;
-    element.style.opacity = '0';
-    requestAnimationFrame(() => {
-        element.style.transform = `translateX(${translateXEnd}px)`;
-        element.style.opacity = '1';
-    });
-}
-function closeCart() {
-    let cartSection = document.getElementById('shoppingcartsection');
-
-    if (cartSection.style.display === 'none' || cartSection.style.display === '') {
-        cartSection.style.display = 'none';
-    } else {
-        cartSection.style.display = 'block';
-    } 
-    disappear(cartSection, 1500, 0, 1000);
-    updateCart();
-}
-function disappear(element, duration, translateXEnd, translateXStart) {
-    element.style.transition = `transform ${duration}ms ease-in, opacity ${duration}ms ease-in`;
-    element.style.transform = `translateX(${translateXEnd}px)`;
-    element.style.opacity = '1';
-    requestAnimationFrame(() => {
-        element.style.transform = `translateX(${translateXStart}px)`;
-        element.style.opacity = '0';
-    });
 }
 function setupStarRating() {
     let stars = document.querySelectorAll('.star');
