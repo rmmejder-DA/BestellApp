@@ -1,12 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-    let closeCartButton = document.getElementById('close-cart-button');
-    let cartSection = document.getElementById('shoppingcartsection');
-    if (closeCartButton && cartSection) {
-        closeCartButton.addEventListener('click', () => {
-            cartSection.style.display = 'block';
-        });
-    }
-});
 function ratingDeineObjektID(rating) {
     let ratingElement = document.getElementById('rating');
     rating = Math.max(0, Math.min(5, rating));
@@ -21,13 +12,24 @@ function ratingDeineObjektID(rating) {
 function saveRate(rating) {
     localStorage.setItem('burgerHausRating', rating);
 }
-function Payment() {
+function checkCartEmpty() {// Warenkorb leer
+    let cartEmptyElement = document.getElementById('cart_empty');
 
-    let orderontheway = document.getElementById('order');
-    let cartEmpty = document.getElementById('cart_empty');
-    cartEmpty.innerHTML = ``;
+    cartEmptyElement.innerHTML = ``;
     if (cart.length === 0) {
-        cartEmpty.innerHTML = "Ihr Warenkorb ist leer. Bitte fügen Sie Artikel hinzu, bevor Sie zur Kasse gehen.";
+        cartEmptyElement.innerHTML = "Warenkorb ist leer";
+        return;
+    }
+}
+function Payment() {
+    let orderontheway = document.getElementById('order');
+    let cartEmptyElement = document.getElementById('cart_empty');
+    cartEmptyElement.innerHTML = ``;
+    if (cart.length === 0) {
+        cartEmptyElement.innerHTML = "Ihr Warenkorb ist leer. Bitte fügen Sie Artikel hinzu, bevor Sie zur Kasse gehen.";
+        setTimeout(() => {
+            cartEmptyElement.innerHTML = ``;
+        }, 5000);
         return;
     }
     if (orderontheway) {
@@ -38,36 +40,68 @@ function Payment() {
         setTimeout(() => {
             orderontheway.innerHTML = '';
         }, 3000);
-    }
+
+    } 
     cart = [];
-    updateCart();
+
     let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
 
     AddToCartButton.forEach(button => {
-        button.textContent = "In den Warenkorb";
+        button.textContent = "Add";
     });
+    updateCart();
+}
+function updateCart() {
+    let cartCount = document.getElementById('cart-count');
+    if (cartCount) {
+        cartCount.style.display = cart.length > 0 ? 'block' : 'none';
+        cartCount.textContent = cart.length;
+    }
+
+    let cartItems = document.getElementById('cart-items');
+    let totalPrice = 0;
+    if (!cartItems) return;
+    let itemMap = new Map();
+    cart.forEach(item => {
+        if (itemMap.has(item.id)) {
+            itemMap.get(item.id).count++;
+        } else {
+            itemMap.set(item.id, { item: item, count: 1 });
+        }
+        totalPrice += item.price;
+    });
+    removeAllBtn();
+    checkCartEmpty();
+    if (cartItems) {
+        let cartItemsHTML = '';
+        itemMap.forEach(entry => {
+            cartItemsHTML +=
+                `<div class="cartall">
+            <p>${entry.item.name} - € ${entry.item.price.toFixed(2)}</p>
+            <div class="cart-buttons">
+            <button class="add-button" onclick="addCart(${entry.item.id})">&#x2795;</button>
+                        <b class="cart-count">${entry.count}x</b>
+            <button class="remove-button" onclick="removeFromCart(${entry.item.id})">&#x2796;</button>  
+            </div></div>`;
+        });
+        cartItems.innerHTML = cartItemsHTML;
+    }
+    let totalPriceEl = document.getElementById('total-price');
+    if (totalPriceEl) totalPriceEl.textContent = `Gesamtpreis: ${totalPrice.toFixed(2)} €`;
 }
 function removeAll() {
     cart = [];
     let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
 
     AddToCartButton.forEach(button => {
-        button.textContent = "In den Warenkorb";
+        button.textContent = "Add";
     });
     updateCart();
 }
 function addToCart(categoryIndex, itemIndex, button) {
     let selectedItem = menu[categoryIndex].items[itemIndex];
-
     if (button) {
-        let entry = cart.reduce((acc, item) => {
-            if (item.id === selectedItem.id) {
-                acc.count++;
-            }
-            return acc;
-        }, { count: 1 });
-
-        button.innerHTML = `<b class="cart-count">${entry.count}x</b> &#x2713`;
+        button.innerHTML = `<p class="added">Added</p>`;
     }
     if (selectedItem && selectedItem.id) {
         cart.push(selectedItem);
@@ -97,7 +131,7 @@ function removeFromCart(itemId) {
     if (cart.length === 0) {// Wenn der Warenkorb leer ist, setze alle "In den Warenkorb" Buttons zurück
         let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
         AddToCartButton.forEach(button => {
-            button.textContent = "In den Warenkorb";
+            button.textContent = "Add";
         });
     }
     updateCart();
@@ -142,49 +176,4 @@ function setupStarRating() {
         });
     });
 }
-function cartEmpty() {// Warenkorb leer
-    let cartEmpty = document.getElementById('cart_empty');
-    if (cartEmpty) {
-        if (cart.length === 0) {
-            cartEmpty.innerHTML = `<p class="cart-empty">Ihr Warenkorb ist leer</p>`;
-        } else {
-            cartEmpty.innerHTML = ``;
-        }
-    }
-}
-function updateCart() {
-    let cartCount = document.getElementById('cart-count');
-    if (cartCount) {
-        cartCount.style.display = cart.length > 0 ? 'block' : 'none';
-        cartCount.textContent = cart.length;
-    }
-    let cartItems = document.getElementById('cart-items');
-    let totalPrice = 0;
-    if (!cartItems) return;
-    let itemMap = new Map();
-    cart.forEach(item => {
-        if (itemMap.has(item.id)) {
-            itemMap.get(item.id).count++;
-        } else {
-            itemMap.set(item.id, { item: item, count: 1 });
-        }
-        totalPrice += item.price;
-    });
-    removeAllBtn();
-    if (cartItems) {
-        let cartItemsHTML = '';
-        itemMap.forEach(entry => {
-            cartItemsHTML +=
-                `<div class="cartall">
-            <p>${entry.item.name} - € ${entry.item.price.toFixed(2)}</p>
-            <div class="cart-buttons">
-            <button class="add-button" onclick="addCart(${entry.item.id})">&#x2795;</button>
-                        <b class="cart-count">${entry.count}x</b>
-            <button class="remove-button" onclick="removeFromCart(${entry.item.id})">&#x2796;</button>  
-            </div></div>`;
-        });
-        cartItems.innerHTML = cartItemsHTML;
-    }
-    let totalPriceEl = document.getElementById('total-price');
-    if (totalPriceEl) totalPriceEl.textContent = `Gesamtpreis: ${totalPrice.toFixed(2)} €`;
-}
+

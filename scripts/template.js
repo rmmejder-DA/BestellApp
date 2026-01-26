@@ -4,7 +4,6 @@ function render() {
     let shoppingCart = document.getElementById('shopping-cart-open');
     let cartSection = document.getElementById('shoppingcartsection');
     let ratingElement = document.getElementById('rateStar');
-    if (!ratingElement || !shoppingCart || !cartSection) return;
 
     ratingElement.innerHTML = `
                 <h1>BurgerHaus</h1>
@@ -18,14 +17,14 @@ function render() {
                         <i id="rating-output">Rating: 0/5</i>
                     <b>Comfort Food</b>`;
     shoppingCart.innerHTML =
-        `<span class="basket_cart" id="cart-count">0</span>
-        <img class="shoppingcartimage" src="./assets/image/shoppingcar.png" alt="Warenkorb Icon">`;
+        `<span class="basket_cart"></span>
+        <span class="basket_cart"></span>
+        <span class="basket_cart"></span>`;
 
     cartSection.innerHTML =
         `<div class="basketPay">
         <header class="basket_header">
         <h2>Warenkorb</h2>
-        <button onclick="closeCart()" class="close-cart-button" id="close-cart-button">&#10005;</button>
         </header>
         <div id="cart_empty" class="cart-empty"></div>
         <div id="order" class="order"></div>
@@ -60,7 +59,10 @@ function render() {
                     <span>${menu[i].items[j].name}</span><span class="price"> € ${menu[i].items[j].price.toFixed(2)}</span>
                     </div>
                     <i class="description-text" id="description">${menu[i].items[j].Beschreibung || ''}</i>
-                    <button onclick="addToCart(${i}, ${j}, this)" class="add-to-cart-button">In den Warenkorb</button>
+                    <div>
+                    <button onclick="addToCart(${i}, ${j}, this)" class="add-to-cart-button">Add</button>
+                    <button onclick ="removeFromCart(${menu[i].items[j].id})" class="remove-from-cart-button">&#128465;</button>
+                    </div>
                 </div>`;
             }
             menuHTML += `</div></div>`;
