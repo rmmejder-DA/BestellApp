@@ -153,17 +153,6 @@ function cartEmpty() {// Warenkorb leer
     }
 }
 function updateCart() {
-    let cartEmpty = document.getElementById('cart_empty');
-    if (cartEmpty) {
-        if (cart.length === 0) {
-            cartEmpty.innerHTML = ``;
-            setTimeout(() => {
-                cartEmpty.innerHTML = `<p class="cart-empty">Ihr Warenkorb ist leer</p>`;
-            }, 3000);
-        } else {
-            cartEmpty.innerHTML = ``;
-        }
-    }
     let cartCount = document.getElementById('cart-count');
     if (cartCount) {
         cartCount.style.display = cart.length > 0 ? 'block' : 'none';
