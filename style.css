@@ -23,25 +23,35 @@
     border-bottom-right-radius: 10px;
 }
 
-.MenuContent {
+.content-menu-basket {
     display: flex;
-    flex-direction: column;
-    top: 0;
-    z-index: 10;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
 }
-
-.shoppingcartsection {
-    position: fixed;
-    top: 80px;
+.menu-wrapper {
+    width: 1440px;
+    flex-grow: 0;
+    position: relative;
     right: 0;
-    width: 400px;
-    height: 800px;
+    z-index: 1;
+}
+.shoppingcartsectionwrapper {
+    flex-grow: 0;
+    position: relative;
+    left: 0;
+    z-index: 2;
+}
+.shoppingcartsection {
+    width: 380px;
+    height: 700px;
+    position: sticky;
+    top: 0;
+    right: 0;
     background-color: #363534;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
     box-shadow: 0 4px 8px 0 #00000040;
-    padding: 10px;
-    z-index: 1002;
 }
 
 .burgerImage {
@@ -85,10 +95,10 @@
 .saladsmall {
     background-color: #e76c1f;
     height: 92px;
-    opacity: 1;
     display: flex;
     align-items: center;
     gap: 20px;
+    
 }
 
 .content {
@@ -188,13 +198,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px;
     background-color: #fdeadc;
-    max-width: 1000px;
-    width: 100%;
     position: relative;
-    margin: auto;
-    right: 200px;
     border-radius: 8px;
     margin-top: 15px;
     margin-bottom: 15px;
@@ -429,17 +435,6 @@
     font-size: 18px;
     color: #363534;
     margin-top: 10px;
-}
-
-.allContent {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding-inline: 10px;
-    max-width: 1440px;
-    margin: 0 auto;
-    margin-bottom: 20px;
-    width: 100%;
 }
 
 .price {

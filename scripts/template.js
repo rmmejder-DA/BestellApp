@@ -31,7 +31,7 @@ function render() {
         <div id="cart-items" class="cart-items"></div>
         <footer class="basket_footer">
         <div class="total-removeall">
-        <h3 id="total-price">Gesamtpreis: 0,00 €</h3>
+        <h3 id="total-price">0,00 €</h3>
         <button onclick="removeAll()" class="remove-all-button" id="remove-all-button">Alles entfernen</button>
         </div>
         <button onclick="Payment()" class="payment-button">Pay</button>
@@ -59,7 +59,7 @@ function render() {
                     <span>${menu[i].items[j].name}</span><span class="price"> € ${menu[i].items[j].price.toFixed(2)}</span>
                     </div>
                     <i class="description-text" id="description">${menu[i].items[j].Beschreibung || ''}</i>
-                    <div>
+                    <div class="button-container">
                     <button onclick="addToCart(${i}, ${j}, this)" class="add-to-cart-button">Add</button>
                     <button onclick ="removeFromCart(${menu[i].items[j].id})" class="remove-from-cart-button">&#128465;</button>
                     </div>

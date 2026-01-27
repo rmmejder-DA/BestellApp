@@ -87,7 +87,7 @@ function updateCart() {
         cartItems.innerHTML = cartItemsHTML;
     }
     let totalPriceEl = document.getElementById('total-price');
-    if (totalPriceEl) totalPriceEl.textContent = `Gesamtpreis: ${totalPrice.toFixed(2)} €`;
+    if (totalPriceEl) totalPriceEl.textContent = `Total ${totalPrice.toFixed(2)} €`;
 }
 function removeAll() {
     cart = [];
