@@ -26,6 +26,7 @@ function openCart() {
         }
     };
     document.addEventListener('keydown', closeOnEscapeHandler);
+    appear(popup, 300, 300, 0);
 }
 
 function appear(element, duration, translateXStart, translateXEnd) {
@@ -45,42 +46,59 @@ function ratingDeineObjektID(rating) {
         let stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
 
         ratingElement.style.color = 'gold';
-        ratingElement.innerHTML = `${stars} <div class='Rate'>(${rating} von 5 Sternen)</div>`;
+        ratingElement.textContent = stars;
+        let rateDiv = document.createElement('div');
+        rateDiv.className = 'Rate';
+        rateDiv.textContent = `(${rating} von 5 Sternen)`;
+        ratingElement.appendChild(rateDiv);
     }
 }
+
 function saveRate(rating) {
     localStorage.setItem('burgerHausRating', rating);
 }
+
 function checkCartEmpty() {// Warenkorb leer
     let cartEmptyElement = document.getElementById('cart_empty');
 
-    cartEmptyElement.innerHTML = ``;
+    if (!cartEmptyElement) return;
+
+    cartEmptyElement.textContent = '';
+
     if (cart.length === 0) {
-        cartEmptyElement.innerHTML = "Warenkorb ist leer";
+        cartEmptyElement.textContent = "Warenkorb ist leer";
         return;
     }
 }
+
 function Payment() {
     let orderontheway = document.getElementById('order');
     let cartEmptyElement = document.getElementById('cart_empty');
-    cartEmptyElement.innerHTML = ``;
+
+    if (cartEmptyElement) {
+        cartEmptyElement.innerHTML = ``;
+    }
     if (cart.length === 0) {
-        cartEmptyElement.innerHTML = "Ihr Warenkorb ist leer. Bitte fügen Sie Artikel hinzu, bevor Sie zur Kasse gehen.";
-        setTimeout(() => {
-            cartEmptyElement.innerHTML = ``;
-        }, 5000);
+        if (cartEmptyElement) {
+            cartEmptyElement.innerHTML = "Bitte fügen Sie Artikel hinzu, bevor Sie zur Kasse gehen.";
+            setTimeout(() => {
+                cartEmptyElement.innerHTML = 'Warenkorb ist leer';
+            }, 5000);
+        }
         return;
     }
     if (orderontheway) {
+        cartEmptyElement.style.display = 'none';
         orderontheway.innerHTML = `<h2>Vielen Dank für Ihre Bestellung!</h2>
         <img class="thankyouimage" src="./assets/image/BestellungUnterwegs.png" alt="Thank You Image">
         <p>Ihre Zahlung wurde erfolgreich verarbeitet</p>
         <p>Ihre Bestellung ist unterwegs und wird in Kürze bei Ihnen eintreffen.</p>`;
         setTimeout(() => {
             orderontheway.innerHTML = '';
+            cartEmptyElement.style.display = 'block';
+            cartEmptyElement.innerHTML = 'Warenkorb ist leer';
         }, 3000);
-
-    } 
+    }
     cart = [];
 
     let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
@@ -90,45 +108,8 @@ function Payment() {
     });
     updateCart();
 }
-function updateCart() {
-    let cartCount = document.getElementById('cart-count');
-    if (cartCount) {
-        cartCount.style.display = cart.length > 0 ? 'block' : 'none';
-        cartCount.textContent = cart.length;
-    }
 
-    let cartItems = document.getElementById('cart-items');
-    let totalPrice = 0;
-    if (!cartItems) return;
-    let itemMap = new Map();
-    cart.forEach(item => {
-        if (itemMap.has(item.id)) {
-            itemMap.get(item.id).count++;
-        } else {
-            itemMap.set(item.id, { item: item, count: 1 });
-        }
-        totalPrice += item.price;
-    });
-    removeAllBtn();
-    checkCartEmpty();
-    if (cartItems) {
-        let cartItemsHTML = '';
-        itemMap.forEach(entry => {
-            cartItemsHTML +=
-                `<div class="cartall">
-            <p>${entry.item.name} - € ${entry.item.price.toFixed(2)}</p>
-            <div class="cart-buttons">
-            <button class="add-button" onclick="addCart(${entry.item.id})">&#x2795;</button>
-                        <b class="cart-count">${entry.count}x</b>
-            <button class="remove-button" onclick="removeFromCart(${entry.item.id})">&#x2796;</button>  
-            </div></div>`;
-        });
-        cartItems.innerHTML = cartItemsHTML;
-    }
-    let totalPriceEl = document.getElementById('total-price');
-    if (totalPriceEl) totalPriceEl.textContent = `Total ${totalPrice.toFixed(2)} €`;
-}
-function removeAll() {
+function removeAll() {// Entfernt alle Elemente aus dem Warenkorb
     cart = [];
     let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
 
@@ -137,7 +118,8 @@ function removeAll() {
     });
     updateCart();
 }
-function addToCart(categoryIndex, itemIndex, button) {
+
+function addToCart(categoryIndex, itemIndex, button) {// Fügt ein Element zum Warenkorb hinzu
     let selectedItem = menu[categoryIndex].items[itemIndex];
     if (button) {
         button.innerHTML = `<p class="added">Added</p>`;
@@ -147,7 +129,8 @@ function addToCart(categoryIndex, itemIndex, button) {
         updateCart();
     };
 }
-function addCart(itemId) {
+
+function addCart(itemId) {// Fügt ein Element zum Warenkorb basierend auf der ID hinzu
     let item = null;
     for (let i = 0; i < menu.length; i++) {
         for (let j = 0; j < menu[i].items.length; j++) {
@@ -162,7 +145,8 @@ function addCart(itemId) {
         updateCart();
     }
 }
-function removeFromCart(itemId) {
+
+function removeFromCart(itemId) {// Entfernt ein Element aus dem Warenkorb basierend auf der ID
     let index = cart.findIndex(item => item.id === itemId);//
     if (index !== -1) {
         cart.splice(index, 1);// Entferne das Element aus dem Warenkorb
@@ -175,6 +159,7 @@ function removeFromCart(itemId) {
     }
     updateCart();
 }
+
 function removeAllBtn() {
     let removeAllButton = document.getElementById('remove-all-button');// Alles entfernen Button
     if (removeAllButton) {
@@ -185,9 +170,13 @@ function removeAllBtn() {
         }
     }
 }
+
 function setupStarRating() {
     let stars = document.querySelectorAll('.star');
     let output = document.getElementById('rating-output');
+
+    if (!output || stars.length === 0) return;
+
     let savedRating = localStorage.getItem('burgerHausRating');
 
     if (savedRating) {
@@ -200,15 +189,10 @@ function setupStarRating() {
 
     stars.forEach((star, index) => {
         star.addEventListener('click', () => {
-            // Reset all stars
             stars.forEach(s => s.classList.remove('active'));
-
-            // Highlight selected stars
             for (let i = 0; i <= index; i++) {
                 stars[i].classList.add('active');
             }
-
-            // Update rating output
             const rating = index + 1;
             output.textContent = `Rating: ${rating}/5`;
             saveRate(rating);

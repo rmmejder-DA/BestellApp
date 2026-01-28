@@ -29,6 +29,7 @@
     max-width: 1440px;
     margin: 0 auto;
 }
+
 .menu-wrapper {
     width: 1440px;
     flex-grow: 0;
@@ -36,13 +37,16 @@
     right: 0;
     z-index: 1;
 }
+
 .shoppingcartsectionwrapper {
     flex-grow: 0;
     position: relative;
     left: 0;
     z-index: 2;
 }
+
 .shoppingcartsection {
+    display: block;
     width: 380px;
     height: 700px;
     position: sticky;
@@ -52,6 +56,20 @@
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
     box-shadow: 0 4px 8px 0 #00000040;
+}
+
+.shoppingcartsectionOpen {
+    display: none;
+    width: 380px;
+    height: 700px;
+    position: fixed;
+    top: 90px;
+    right: 0;
+    background-color: #363534;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    box-shadow: 0 4px 8px 0 #00000040;
+    z-index: 1000;
 }
 
 .burgerImage {
@@ -98,7 +116,7 @@
     display: flex;
     align-items: center;
     gap: 20px;
-    
+
 }
 
 .content {
@@ -319,6 +337,24 @@
     border-radius: 5px;
     display: block;
     margin: 6px 0;
+}
+.basketLogo {
+    width: 50px;
+    height: 40px;
+}
+.basketOpenWrapper {
+    display: none;
+    position: fixed;
+    bottom: -30px;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    background-color: sandybrown;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #363534;
+    box-shadow: 0 4px 8px 0 #00000040;
 }
 
 .payment-button {

@@ -60,14 +60,18 @@
         padding: 5px 5px;
     }
 }
-
+@media (max-width:500px) {
+    .menu-item {
+        width: 280px!important;
+    }
+}
 @media (max-width:600px) {
     .basket span {
         width: 25px;
         height: 3px;
     }
     .menu-item {
-        width: 280px !important;
+        width: 100% !important;
     }
 
     .basket {
@@ -118,6 +122,12 @@
 }
 
 @media (max-width:850px) {
+    .allContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
     .button-container {
         display: unset !important;
     }
@@ -183,13 +193,14 @@
     .shoppingcartsection {
         display: none;
     }
-
-    .allContent {
-        align-items: center;
-        justify-content: center;
-        display: grid;
+    .basketOpenWrapper {
+        display: flex;
+        
     }
-
+    .menu-wrapper {
+        justify-content: center;
+        align-items: center;
+    }
     .menu-wrapper {
         justify-content: center;
         align-items: center;

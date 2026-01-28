@@ -21,36 +21,43 @@
     <header>
         <div class="header_container">
             <img class="LogoLinksHeader" src="./assets/image/LogoLinksHeader.png" alt="LogoLinksHeader">
-            <div onclick="openCart()" id="shopping-cart-open" class="basket"></div>
+            <div id="menu-header" class="basket"></div>
         </div>
     </header>
-<main>
-    <div class="imgunderheader">
-        <div>
-            <img class="BigImage" src="./assets/image/BigImage.jpg" alt="Bannerbild des BurgerHaus Restaurants">
+    <main>
+        <div class="imgunderheader">
+            <div>
+                <img class="BigImage" src="./assets/image/BigImage.jpg" alt="Bannerbild des BurgerHaus Restaurants">
+            </div>
+            <div class="BI">
+                <img class="burgerImage" src="./assets/image/BurgerLogo.png" alt="BurgerHaus logo">
+            </div>
         </div>
-        <div class="BI">
-            <img class="burgerImage" src="./assets/image/BurgerLogo.png" alt="BurgerHaus logo">
+
+        <div class="underH1">
+            <div class="BurgerHausplusRezension" id="rateStar"></div>
         </div>
-    </div>
 
-    <div class="underH1">
-        <div class="BurgerHausplusRezension" id="rateStar"></div>
-    </div>
-    <div class="content-menu-basket">
-        
-        <section class="menu-wrapper">
-        <div id="MenuContent"></div>
-        </section>
+        <div class="content-menu-basket">
 
-        <section class="shoppingcartsectionwrapper">
-            <div class="shoppingcartsection" id="shoppingcartsection"></div>
-        </section>
-    </div>
+            <section class="menu-wrapper">
+                <div id="MenuContent"></div>
+                <div class="shoppingcartsectionOpen" id="shoppingcartsectionOpen"></div>
+            </section>
+
+            <section class="shoppingcartsectionwrapper">
+                <div class="shoppingcartsection" id="shoppingcartsectionSite"></div>
+            </section>
+
+        </div>
+        <div onclick="openCart()" id="openBtn" class="basketOpenWrapper">
+                <img class="basketLogo" src="./assets/image/shoppingcar.png" alt="Basket">
+        </div>
+    </main>
+
     <footer>
         <div class="footer_container">
             <a>&copy; 2025 BurgerHaus</a>
-
             <div class="footer_links">
                 <a href="javascript:void(0)" role="button">Imprint</a>
                 <a href="javascript:void(0)" role="button">Cookies Preferences</a>

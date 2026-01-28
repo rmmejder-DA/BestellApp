@@ -2,10 +2,12 @@
 function render() {
     let menuContentRef = document.getElementById('MenuContent');
     let shoppingCart = document.getElementById('shopping-cart-open');
-    let cartSection = document.getElementById('shoppingcartsection');
+    let cartSection = document.getElementById('shoppingcartsectionSite');
     let ratingElement = document.getElementById('rateStar');
+    let basket = document.getElementById('shoppingcartsectionOpen');
 
-    ratingElement.innerHTML = `
+    if (ratingElement) {
+        ratingElement.innerHTML = `
                 <h1>BurgerHaus</h1>
                     <div class="stars">
                         <span class="star" data-value="1">★</span>
@@ -16,12 +18,16 @@ function render() {
                     </div>
                         <i id="rating-output">Rating: 0/5</i>
                     <b>Comfort Food</b>`;
-    shoppingCart.innerHTML =
+    }
+    if (shoppingCart) {
+        shoppingCart.innerHTML =
         `<span class="basket_cart"></span>
         <span class="basket_cart"></span>
         <span class="basket_cart"></span>`;
+    }
 
-    cartSection.innerHTML =
+    if (cartSection) {
+        cartSection.innerHTML =
         `<div class="basketPay">
         <header class="basket_header">
         <h2>Warenkorb</h2>
@@ -32,11 +38,30 @@ function render() {
         <footer class="basket_footer">
         <div class="total-removeall">
         <h3 id="total-price">0,00 €</h3>
-        <button onclick="removeAll()" class="remove-all-button" id="remove-all-button">Alles entfernen</button>
+        <button onclick="removeAll()" class="remove-all-button" id="remove-all-button">Remove</button>
         </div>
         <button onclick="Payment()" class="payment-button">Pay</button>
         </footer>
         </div>`;
+    }
+    if (basket) {
+        basket.innerHTML =
+        `<div class="basketPay">
+        <header class="basket_header">
+        <h2>Warenkorb</h2>
+        </header>
+        <div id="cart_empty" class="cart-empty"></div>
+        <div id="order" class="order"></div>
+        <div id="cart-items" class="cart-items"></div>
+        <footer class="basket_footer">
+        <div class="total-removeall">
+        <h3 id="total-price">0,00 €</h3>
+        <button onclick="removeAll()" class="remove-all-button" id="remove-all-button">Remove</button>
+        </div>
+        <button onclick="Payment()" class="payment-button">Pay</button>
+        </footer>
+        </div>`;
+    }
     updateCart();
     setupStarRating();
     if (menuContentRef) {
@@ -69,4 +94,42 @@ function render() {
         }
         menuContentRef.innerHTML = menuHTML;
     }
+}
+
+function updateCart() {
+    let cartCount = document.getElementById('cart-count');
+    if (cartCount) {
+        cartCount.style.display = cart.length > 0 ? 'block' : 'none';
+        cartCount.textContent = cart.length;
+    }
+    let cartItems = document.getElementById('cart-items');
+    let totalPrice = 0;
+    if (!cartItems) return;
+    let itemMap = new Map();
+    cart.forEach(item => {
+        if (itemMap.has(item.id)) {
+            itemMap.get(item.id).count++;
+        } else {
+            itemMap.set(item.id, { item: item, count: 1 });
+        }
+        totalPrice += item.price;
+    });
+    removeAllBtn();
+    checkCartEmpty();
+    if (cartItems) {
+        let cartItemsHTML = '';
+        itemMap.forEach(entry => {
+            cartItemsHTML +=
+                `<div class="cartall">
+            <p>${entry.item.name} - € ${entry.item.price.toFixed(2)}</p>
+            <div class="cart-buttons">
+            <button class="add-button" onclick="addCart(${entry.item.id})">&#x2795;</button>
+                        <b class="cart-count">${entry.count}x</b>
+            <button class="remove-button" onclick="removeFromCart(${entry.item.id})">&#x2796;</button>  
+            </div></div>`;
+        });
+        cartItems.innerHTML = cartItemsHTML;
+    }
+    let totalPriceEl = document.getElementById('total-price');
+    if (totalPriceEl) totalPriceEl.textContent = `Total ${totalPrice.toFixed(2)} €`;
 }
