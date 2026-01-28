@@ -1,3 +1,42 @@
+function openCart() {
+    const popup = document.getElementById('shoppingcartsectionOpen');
+    const openBtn = document.getElementById('openBtn');
+
+    let closePopupHandler;
+    let closeOnEscapeHandler;
+
+    // Öffnet das Popup
+    openBtn.addEventListener('click', (event) => {
+        popup.style.display = 'block';
+        event.stopPropagation(); // Verhindert, dass der Klick sofort wieder schließt
+    });
+
+    // Klick außerhalb erkennen
+    closePopupHandler = (event) => {
+        if (!popup.contains(event.target) && event.target !== openBtn) {
+            popup.style.display = 'none';
+        }
+    };
+    document.addEventListener('click', closePopupHandler);
+
+    // Optional: ESC-Taste zum Schließen
+    closeOnEscapeHandler = (event) => {
+        if (event.key === 'Escape') {
+            popup.style.display = 'none';
+        }
+    };
+    document.addEventListener('keydown', closeOnEscapeHandler);
+}
+
+function appear(element, duration, translateXStart, translateXEnd) {
+    element.style.transition = `transform ${duration}ms ease-out, opacity ${duration}ms ease-out`;
+    element.style.transform = `translateX(${translateXStart}px)`;
+    element.style.opacity = '0';
+    requestAnimationFrame(() => {
+        element.style.transform = `translateX(${translateXEnd}px)`;
+        element.style.opacity = '1';
+    });
+}
 function ratingDeineObjektID(rating) {
     let ratingElement = document.getElementById('rating');
     rating = Math.max(0, Math.min(5, rating));
@@ -176,4 +215,3 @@ function setupStarRating() {
         });
     });
 }
-
