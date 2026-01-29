@@ -112,6 +112,7 @@
 .pizzasmall,
 .saladsmall {
     background-color: #e76c1f;
+    max-width: 1920px;
     height: 92px;
     display: flex;
     align-items: center;
@@ -194,8 +195,8 @@
 }
 
 .thankyouimage {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
     object-position: center;
     margin-bottom: 20px;
@@ -204,7 +205,7 @@
 
 @keyframes moveImage {
     0% {
-        transform: translateY(-100px);
+        transform: translateY(-50px);
     }
 
     100% {

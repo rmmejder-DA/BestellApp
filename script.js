@@ -1,7 +1,7 @@
-function openCart() {
-    const popup = document.getElementById('shoppingcartsectionOpen');
-    const openBtn = document.getElementById('openBtn');
 
+function openCart() {
+    const popup = document.getElementById('basketOpen');
+    const openBtn = document.getElementById('openBtn');
     let closePopupHandler;
     let closeOnEscapeHandler;
 
@@ -13,7 +13,7 @@ function openCart() {
 
     // Klick außerhalb erkennen
     closePopupHandler = (event) => {
-        if (!popup.contains(event.target) && event.target !== openBtn) {
+        if (!popup.contains(event.target)) {
             popup.style.display = 'none';
         }
     };
@@ -37,6 +37,7 @@ function appear(element, duration, translateXStart, translateXEnd) {
         element.style.transform = `translateX(${translateXEnd}px)`;
         element.style.opacity = '1';
     });
+    updateCart();
 }
 function ratingDeineObjektID(rating) {
     let ratingElement = document.getElementById('rating');
@@ -121,18 +122,24 @@ function removeAll() {// Entfernt alle Elemente aus dem Warenkorb
 
 function addToCart(categoryIndex, itemIndex, button) {// Fügt ein Element zum Warenkorb hinzu
     let selectedItem = menu[categoryIndex].items[itemIndex];
+
+    let count = cart.filter(item => item.id === selectedItem.id).length + 1;
+
     if (button) {
-        button.innerHTML = `<p class="added">Added</p>`;
+        button.innerHTML = `<b class="cart-count">${count}x</b>`;
+    }
+    if (basketCount) {
+        basketCount.innerHTML = `<b class="cart-count">${count}x</b>`;
     }
     if (selectedItem && selectedItem.id) {
         cart.push(selectedItem);
         updateCart();
-    };
+    }
 }
 
 function addCart(itemId) {// Fügt ein Element zum Warenkorb basierend auf der ID hinzu
     let item = null;
-    for (let i = 0; i < menu.length; i++) {
+    for (let i = 0; i < menu.length; i++) {// Durchläuft alle Kategorien im Menü
         for (let j = 0; j < menu[i].items.length; j++) {
             if (menu[i].items[j].id === itemId) {
                 item = menu[i].items[j];
@@ -142,8 +149,8 @@ function addCart(itemId) {// Fügt ein Element zum Warenkorb basierend auf der I
     }
     if (item) {// Wenn das Element gefunden wurde, füge es dem Warenkorb hinzu
         cart.push(item);
-        updateCart();
     }
+    updateCart();
 }
 
 function removeFromCart(itemId) {// Entfernt ein Element aus dem Warenkorb basierend auf der ID
