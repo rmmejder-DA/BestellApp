@@ -32,6 +32,7 @@ function render() {
         basket.innerHTML =
     `<div class="basketPay">
         <header class="basket_header">
+        <button class="close-basket-button" onclick="closeBasket()">&#10006;</button>
         <h2>Warenkorb</h2>
         </header>
         <div id="cart_empty" class="cart-empty"></div>
@@ -87,7 +88,7 @@ function render() {
 function updateCart() {
     let cartCount = document.getElementById('cart-count');
     let basketCount = document.getElementById('basketCount');
-
+    
     if (cartCount) {
         cartCount.style.display = cart.length > 0 ? 'block' : 'none';
         cartCount.textContent = cart.length;

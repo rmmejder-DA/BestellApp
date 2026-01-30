@@ -194,12 +194,18 @@
 }
 
 @media (max-width:1267px) {
+    .close-basket-button {
+    display: flex;
+    }
+    .close-basket-button:hover {
+        cursor: pointer;
+        background-attachment: fixed;
+    }
     .shoppingcartsection {
         display: none;
     }
     .basketOpenWrapper {
         display: flex;
-        
     }
     .menu-wrapper {
         justify-content: center;

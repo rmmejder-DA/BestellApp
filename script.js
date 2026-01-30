@@ -93,6 +93,7 @@ function checkCartEmpty() {// Warenkorb leer
 function Payment() {
     let orderontheway = document.getElementById('order');
     let cartEmptyElement = document.getElementById('cart_empty');
+    let cartItemsElement = document.getElementById('cart-items');
     
     if (cartEmptyElement) {
         cartEmptyElement.innerHTML = ``;
@@ -102,22 +103,29 @@ function Payment() {
             cartEmptyElement.innerHTML = "Bitte fügen Sie Artikel hinzu, bevor Sie zur Kasse gehen.";
             setTimeout(() => {
                 cartEmptyElement.innerHTML = 'Warenkorb ist leer';
-            }, 5000);
+            }, 3000);
         }
         return;
     }
     
     if (orderontheway) {
-        cartEmptyElement.style.display = 'none';
+        cartItemsElement.style.display = 'none';// Versteckt die Anzeige der Warenkorbartikel
+        cartEmptyElement.style.display = 'none';// Versteckt die leere Warenkorbanzeige
+        orderontheway.style.display = 'flex';// Zeigt die Bestellbestätigungsnachricht an
+        if (cartItemsElement) {
+            cartItemsElement.innerHTML = '';// Leert die Anzeige der Warenkorbartikel
+        }
+
         orderontheway.innerHTML = `<h2>Vielen Dank für Ihre Bestellung!</h2>
         <img class="thankyouimage" src="./assets/image/BestellungUnterwegs.png" alt="Thank You Image">
         <p>Ihre Zahlung wurde erfolgreich verarbeitet</p>
         <p>Ihre Bestellung ist unterwegs und wird in Kürze bei Ihnen eintreffen.</p>`;
         setTimeout(() => {
-            orderontheway.innerHTML = '';
-            cartEmptyElement.style.display = 'block';
+            cartItemsElement.style.display = 'block';// Zeigt die Anzeige der Warenkorbartikel wieder an
+            orderontheway.style.display = 'none';// Versteckt die Bestellbestätigungsnachricht nach 5 Sekunden
+            cartEmptyElement.style.display = 'block';// Zeigt die leere Warenkorbanzeige wieder an
             cartEmptyElement.innerHTML = 'Warenkorb ist leer';
-        }, 3000);
+        }, 5000);
         updateCart();
     }
     cart = [];
@@ -237,4 +245,8 @@ function setupStarRating() {
             saveRate(rating);
         });
     });
+}
+function closeBasket() {
+    const popup = document.getElementById('basketOpen');
+    disappear(popup, 300, 0, 300);
 }

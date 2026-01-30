@@ -195,17 +195,16 @@
 }
 
 .countby {
-    position: absolute;
-    top: 10px;
-    right: 31px;
     color: white;
     width: 24px;
     height: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-size: 18px;
     font-weight: bold;
+    position: fixed;
+    bottom: 0;
+}
+.countby:hover {
+    cursor: pointer;
 }
 
 .thankyouimage {
@@ -380,8 +379,6 @@
 
 .basketOpenWrapper:hover {
     background-color: #e76c1f;
-    cursor: pointer;
-
 }
 
 .basketOpenWrapper:hover::after {
@@ -446,26 +443,35 @@
 }
 
 .basket_header {
-    display: flex;
-    justify-content: space-around;
+display: flex;
+    justify-content: space-between;
+    padding-right: 15px;
+    padding-left: 15px;
+    align-items: center;
     height: 72px;
     border-bottom-left-radius: 15px;
     border-top-left-radius: 15px;
-    position: relative;
 }
-
+.close-basket-button {
+    display: none;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    font-weight: 900;
+}
 .order {
-    display: flex;
-    justify-content: center;
+    display: none;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    flex: 1;
 }
 
 .basket_header h2 {
     font-size: 28px;
     color: #ffffff;
-    text-align: center;
-    padding-top: 20px;
 }
 
 .stars {
