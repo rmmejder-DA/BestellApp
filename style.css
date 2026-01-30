@@ -194,6 +194,20 @@
     height: 100%;
 }
 
+.countby {
+    position: absolute;
+    top: 10px;
+    right: 31px;
+    color: white;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
 .thankyouimage {
     width: 150px;
     height: 150px;
@@ -252,14 +266,18 @@
     background-color: #e76c1f;
     color: white;
     border: none;
-    padding: 10px 20px;
     border-radius: 5px;
     font-size: 16px;
-    width: 92px;
+    width: 37px;
+    height: 37px;
+    transition: 0.3s;
+    text-shadow: #000000 1px 1px 2px;
 }
 
 .add-to-cart-button:hover {
-    background-color: #c65a1b;
+    background-color: #ffbf9a;
+    transform: translateY(1px);
+    text-shadow: #000000 1px 1px 2px;
 }
 
 .cart-buttons {
@@ -339,23 +357,46 @@
     display: block;
     margin: 6px 0;
 }
+
 .basketLogo {
     width: 50px;
     height: 40px;
 }
+
 .basketOpenWrapper {
     display: none;
     position: fixed;
-    bottom: -30px;
+    bottom: -70px;
     justify-content: center;
     align-items: center;
     z-index: 1000;
     background-color: sandybrown;
-    border-radius: 50%;
+    border-radius: 10%;
     width: 100px;
     height: 100px;
     border: 1px solid #363534;
     box-shadow: 0 4px 8px 0 #00000040;
+}
+
+.basketOpenWrapper:hover {
+    background-color: #e76c1f;
+    cursor: pointer;
+
+}
+
+.basketOpenWrapper:hover::after {
+    content: 'Warenkorb öffnen';
+    position: absolute;
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    width: max-content;
+    text-shadow: #000000 1px 1px 2px;
+    bottom: 110px;
+    background-color: sandybrown;
+    left: 50%;
+    padding: 10px;
+    border-radius: 10px;
+    transform: translateX(-50%);
 }
 
 .payment-button {

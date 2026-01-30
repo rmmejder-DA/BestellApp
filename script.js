@@ -4,7 +4,10 @@ function openCart() {
     const openBtn = document.getElementById('openBtn');
     let closePopupHandler;
     let closeOnEscapeHandler;
-
+    if (popup) {
+        popup.innerHTML = basket.innerHTML;
+        updateCart();
+    }
     // Öffnet das Popup
     openBtn.addEventListener('click', (event) => {
         popup.style.display = 'block';
@@ -14,7 +17,7 @@ function openCart() {
     // Klick außerhalb erkennen
     closePopupHandler = (event) => {
         if (!popup.contains(event.target)) {
-            popup.style.display = 'none';
+            disappear(popup, 300, 0, 300);
         }
     };
     document.addEventListener('click', closePopupHandler);
@@ -22,11 +25,25 @@ function openCart() {
     // Optional: ESC-Taste zum Schließen
     closeOnEscapeHandler = (event) => {
         if (event.key === 'Escape') {
-            popup.style.display = 'none';
+            disappear(popup, 300, 0, 300);
         }
     };
     document.addEventListener('keydown', closeOnEscapeHandler);
     appear(popup, 300, 300, 0);
+}
+
+function disappear(element, duration, translateXStart, translateXEnd) {
+    element.style.transition = `transform ${duration}ms ease-in, opacity ${duration}ms ease-in`;
+    element.style.transform = `translateX(${translateXStart}px)`;
+    element.style.opacity = '1';
+    requestAnimationFrame(() => {
+        element.style.transform = `translateX(${translateXEnd}px)`;
+        element.style.opacity = '0';
+    });
+    setTimeout(() => {
+        element.style.display = 'none';
+    }, duration);
+    updateCart();
 }
 
 function appear(element, duration, translateXStart, translateXEnd) {
@@ -39,6 +56,7 @@ function appear(element, duration, translateXStart, translateXEnd) {
     });
     updateCart();
 }
+
 function ratingDeineObjektID(rating) {
     let ratingElement = document.getElementById('rating');
     rating = Math.max(0, Math.min(5, rating));
@@ -75,7 +93,7 @@ function checkCartEmpty() {// Warenkorb leer
 function Payment() {
     let orderontheway = document.getElementById('order');
     let cartEmptyElement = document.getElementById('cart_empty');
-
+    
     if (cartEmptyElement) {
         cartEmptyElement.innerHTML = ``;
     }
@@ -88,6 +106,7 @@ function Payment() {
         }
         return;
     }
+    
     if (orderontheway) {
         cartEmptyElement.style.display = 'none';
         orderontheway.innerHTML = `<h2>Vielen Dank für Ihre Bestellung!</h2>
@@ -99,6 +118,7 @@ function Payment() {
             cartEmptyElement.style.display = 'block';
             cartEmptyElement.innerHTML = 'Warenkorb ist leer';
         }, 3000);
+        updateCart();
     }
     cart = [];
 
@@ -155,9 +175,21 @@ function addCart(itemId) {// Fügt ein Element zum Warenkorb basierend auf der I
 
 function removeFromCart(itemId) {// Entfernt ein Element aus dem Warenkorb basierend auf der ID
     let index = cart.findIndex(item => item.id === itemId);//
+    let button = document.querySelector(`.add-to-cart-button[onclick="addToCart(${Math.floor((itemId - 1) / 4)}, ${(itemId - 1) % 4}, this)"]`);
+
+    if (button) {
+        let count = cart.filter(item => item.id === itemId).length - 1;
+        if (count > 0) {
+            button.innerHTML = `<b class="cart-count">${count}x</b>`;
+        }
+        else {
+            button.textContent = "Add";
+        }
+    }
     if (index !== -1) {
         cart.splice(index, 1);// Entferne das Element aus dem Warenkorb
     }
+    
     if (cart.length === 0) {// Wenn der Warenkorb leer ist, setze alle "In den Warenkorb" Buttons zurück
         let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
         AddToCartButton.forEach(button => {

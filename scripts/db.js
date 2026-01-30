@@ -31,7 +31,7 @@ let salad = {
 let imgAssetsPath = "./assets/image/";
 
 let menu = [burger, pizza, salad];
-
+let count = 0;
 let cart = [];
 description = "Beschreibung"
 let decriptionElement = document.getElementById('description');
