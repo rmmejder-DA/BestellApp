@@ -5,15 +5,16 @@ function render() {
     let cartSection = document.getElementById('basket');
     let ratingElement = document.getElementById('rateStar');
     let basket = document.getElementById('basketOpen');
-        if (basket) {
+
+    if (basket) {
         basket.innerHTML =
-        `<div class="basketPay">
+            `<div class="basketPay">
         <header class="basket_header">
         <h2>Warenkorb</h2>
         </header>
         <div id="cart_empty" class="cart-empty"></div>
         <div id="order" class="order"></div>
-        <div id="cart-items" class="cart-items"></div>
+        <div id="cart-items" class="cart-items"></div>    
         <footer class="basket_footer">
         <div class="total-removeall">
         <h3 id="total-price">0,00 €</h3>
@@ -24,9 +25,10 @@ function render() {
         </div>`;
     }
     updateCart();
+
     if (cartSection) {
         cartSection.innerHTML =
-        `<div class="basketPay">
+            `<div class="basketPay">
         <header class="basket_header">
         <h2>Warenkorb</h2>
         </header>
@@ -60,12 +62,12 @@ function render() {
     updateCart();
     if (menuheader) {
         menuheader.innerHTML =
-        `<span class="basket_cart"></span>
+            `<span class="basket_cart"></span>
         <span class="basket_cart"></span>
         <span class="basket_cart"></span>`;
     }
     updateCart();
-    
+
     if (menuContentRef) {
         let menuHTML = "";
         for (let i = 0; i < menu.length; i++) {
@@ -101,17 +103,18 @@ function render() {
 function updateCart() {
     let cartCount = document.getElementById('cart-count');
     let basketCount = document.getElementById('basketCount');
-
-    if (basketCount) {
-        basketCount.style.display = cart.length > 0 ? 'block' : 'none';
-        basketCount.textContent = cart.length;
-    }
-
+    
     if (cartCount) {
         cartCount.style.display = cart.length > 0 ? 'block' : 'none';
         cartCount.textContent = cart.length;
     }
     
+    if (basketCount) {
+        basketCount.style.display = cart.length > 0 ? 'block' : 'none';
+        basketCount.textContent = cart.length;
+    }
+
+
     let cartItems = document.getElementById('cart-items');
     let totalPrice = 0;
     if (!cartItems) return;
