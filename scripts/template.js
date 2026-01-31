@@ -118,7 +118,9 @@ function updateCart() {
         itemMap.forEach(entry => {
             cartItemsHTML +=
                 `<div class="cartall">
+            <button class="cart-item-remove" id="remove-one-item-${entry.item.id}" onclick="removeOneItem(${entry.item.id})">&#128465;</button>
             <p>${entry.item.name} - € ${entry.item.price.toFixed(2)}</p>
+
             <div class="cart-buttons">
             <button class="add-button" onclick="addCart(${entry.item.id})">&#x2795;</button>
                         <b class="cart-count">${entry.count}x</b>

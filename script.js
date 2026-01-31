@@ -250,3 +250,17 @@ function closeBasket() {
     const popup = document.getElementById('basketOpen');
     disappear(popup, 300, 0, 300);
 }
+function removeOneItem(itemId) {
+    let removeButton = document.getElementById(`remove-one-item-${itemId}`);
+    let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
+    cart = cart.filter(item => item.id !== itemId);
+    if (removeButton) {
+        removeButton.style.display = 'none';
+    } else {
+        AddToCartButton.forEach(button => {
+            button.textContent = "Add";
+        });
+    }
+    updateCart();
+    removeFromCart(itemId);
+}

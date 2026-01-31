@@ -1,6 +1,6 @@
 @media (max-width:430px) {
     .shoppingcartsectionOpen {
-    width: 315px;
+    width: 310px;
     }
     
     .burgerImage {
@@ -162,13 +162,18 @@
     .add-to-cart-button {
         margin: 10px auto 10px auto;
     }
-
+    .cart-buttons {
+        justify-content: center;
+        gap:0px;
+    }
+    .cartall {
+        justify-content: space-around;
+    }
     .burgerSmallImage,
     .pizzaSmallImage,
     .saladSmallImage {
         width: 120px;
         height: 120px;
-        margin-left: 20px;
     }
 
     .description-text {
