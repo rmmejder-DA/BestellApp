@@ -44,7 +44,7 @@
     }
 
     p {
-        font-size: 16px;
+        font-size: 14px;
     }
 
     b {
@@ -131,6 +131,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-inline: 10px;
 }
     .button-container {
         display: unset !important;
@@ -166,16 +167,15 @@
         justify-content: center;
         gap:0px;
     }
-    .cartall {
-        justify-content: space-around;
-    }
     .burgerSmallImage,
     .pizzaSmallImage,
     .saladSmallImage {
-        width: 120px;
-        height: 120px;
+        width: 100px;
+        height: 100px;
     }
-
+    .burgersmall, .pizzasmall, .saladsmall {
+        height: 82px!important;
+    }
     .description-text {
         display: contents;
     }

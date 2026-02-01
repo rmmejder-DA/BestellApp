@@ -1,35 +1,46 @@
-
 function openCart() {
     const popup = document.getElementById('basketOpen');
-    const openBtn = document.getElementById('openBtn');
-    let closePopupHandler;
-    let closeOnEscapeHandler;
+    const openBtn = document.getElementById('openBtn')
     if (popup) {
         popup.innerHTML = basket.innerHTML;
+        document.body.classList.add('noscroll');
         updateCart();
     }
-    // Öffnet das Popup
     openBtn.addEventListener('click', (event) => {
         popup.style.display = 'block';
-        event.stopPropagation(); // Verhindert, dass der Klick sofort wieder schließt
+        event.stopPropagation();
     });
+    Handler();
+    appear(popup, 300, 300, 0);
+}
 
-    // Klick außerhalb erkennen
-    closePopupHandler = (event) => {
-        if (!popup.contains(event.target)) {
-            disappear(popup, 300, 0, 300);
+function Handler() {
+    let popup = document.getElementById('basketOpen');
+    let closePopupHandler;
+    let closeOnEscapeHandler;
+    closePopupHandler = function () {
+        closeBasket();
+        document.removeEventListener('click', closePopupHandler);
+    }
+    closeOnEscapeHandler = function (event) {
+        if (event.key === 'Escape') {
+            closeBasket();
+            document.removeEventListener('keydown', closeOnEscapeHandler);
         }
     };
     document.addEventListener('click', closePopupHandler);
-
-    // Optional: ESC-Taste zum Schließen
-    closeOnEscapeHandler = (event) => {
-        if (event.key === 'Escape') {
-            disappear(popup, 300, 0, 300);
-        }
-    };
     document.addEventListener('keydown', closeOnEscapeHandler);
     appear(popup, 300, 300, 0);
+}
+
+function closeBasket() {
+    const popup = document.getElementById('basketOpen');
+    popup.addEventListener('click', (event) => {
+        event.stopPropagation(); // Verhindert, dass der Klick das Popup schließt
+    }
+    );
+    document.body.classList.remove('noscroll'); // Scrollen wieder aktivieren
+    disappear(popup, 300, 0, 300);
 }
 
 function disappear(element, duration, translateXStart, translateXEnd) {
@@ -60,10 +71,8 @@ function appear(element, duration, translateXStart, translateXEnd) {
 function ratingDeineObjektID(rating) {
     let ratingElement = document.getElementById('rating');
     rating = Math.max(0, Math.min(5, rating));
-
     if (ratingElement) {
         let stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
-
         ratingElement.style.color = 'gold';
         ratingElement.textContent = stars;
         let rateDiv = document.createElement('div');
@@ -77,68 +86,17 @@ function saveRate(rating) {
     localStorage.setItem('burgerHausRating', rating);
 }
 
-function checkCartEmpty() {// Warenkorb leer
+function checkCartEmpty() {
     let cartEmptyElement = document.getElementById('cart_empty');
-
     if (!cartEmptyElement) return;
-
     cartEmptyElement.textContent = '';
-
     if (cart.length === 0) {
         cartEmptyElement.textContent = "Warenkorb ist leer";
         return;
     }
 }
 
-function Payment() {
-    let orderontheway = document.getElementById('order');
-    let cartEmptyElement = document.getElementById('cart_empty');
-    let cartItemsElement = document.getElementById('cart-items');
-    
-    if (cartEmptyElement) {
-        cartEmptyElement.innerHTML = ``;
-    }
-    if (cart.length === 0) {
-        if (cartEmptyElement) {
-            cartEmptyElement.innerHTML = "Bitte fügen Sie Artikel hinzu, bevor Sie zur Kasse gehen.";
-            setTimeout(() => {
-                cartEmptyElement.innerHTML = 'Warenkorb ist leer';
-            }, 3000);
-        }
-        return;
-    }
-    
-    if (orderontheway) {
-        cartItemsElement.style.display = 'none';// Versteckt die Anzeige der Warenkorbartikel
-        cartEmptyElement.style.display = 'none';// Versteckt die leere Warenkorbanzeige
-        orderontheway.style.display = 'flex';// Zeigt die Bestellbestätigungsnachricht an
-        if (cartItemsElement) {
-            cartItemsElement.innerHTML = '';// Leert die Anzeige der Warenkorbartikel
-        }
-
-        orderontheway.innerHTML = `<h2>Vielen Dank für Ihre Bestellung!</h2>
-        <img class="thankyouimage" src="./assets/image/BestellungUnterwegs.png" alt="Thank You Image">
-        <p>Ihre Zahlung wurde erfolgreich verarbeitet</p>
-        <p>Ihre Bestellung ist unterwegs und wird in Kürze bei Ihnen eintreffen.</p>`;
-        setTimeout(() => {
-            cartItemsElement.style.display = 'block';// Zeigt die Anzeige der Warenkorbartikel wieder an
-            orderontheway.style.display = 'none';// Versteckt die Bestellbestätigungsnachricht nach 5 Sekunden
-            cartEmptyElement.style.display = 'block';// Zeigt die leere Warenkorbanzeige wieder an
-            cartEmptyElement.innerHTML = 'Warenkorb ist leer';
-        }, 5000);
-        updateCart();
-    }
-    cart = [];
-
-    let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
-
-    AddToCartButton.forEach(button => {
-        button.textContent = "Add";
-    });
-    updateCart();
-}
-
-function removeAll() {// Entfernt alle Elemente aus dem Warenkorb
+function removeAll() {
     cart = [];
     let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
 
@@ -148,11 +106,9 @@ function removeAll() {// Entfernt alle Elemente aus dem Warenkorb
     updateCart();
 }
 
-function addToCart(categoryIndex, itemIndex, button) {// Fügt ein Element zum Warenkorb hinzu
+function addToCart(categoryIndex, itemIndex, button) {
     let selectedItem = menu[categoryIndex].items[itemIndex];
-
     let count = cart.filter(item => item.id === selectedItem.id).length + 1;
-
     if (button) {
         button.innerHTML = `<b class="cart-count">${count}x</b>`;
     }
@@ -165,45 +121,37 @@ function addToCart(categoryIndex, itemIndex, button) {// Fügt ein Element zum W
     }
 }
 
-function addCart(itemId) {// Fügt ein Element zum Warenkorb basierend auf der ID hinzu
+function addCart(itemId) {
     let item = null;
-    for (let i = 0; i < menu.length; i++) {// Durchläuft alle Kategorien im Menü
+    for (let i = 0; i < menu.length; i++) {
         for (let j = 0; j < menu[i].items.length; j++) {
             if (menu[i].items[j].id === itemId) {
                 item = menu[i].items[j];
             }
         }
-        if (item) break;// Wenn das Element gefunden wurde, breche die äußere Schleife ab
+        if (item) break;
     }
-    if (item) {// Wenn das Element gefunden wurde, füge es dem Warenkorb hinzu
+    if (item) {
         cart.push(item);
     }
     updateCart();
 }
 
-function removeFromCart(itemId) {// Entfernt ein Element aus dem Warenkorb basierend auf der ID
-    let index = cart.findIndex(item => item.id === itemId);//
+function removeFromCart(itemId) {
+    let index = cart.findIndex(item => item.id === itemId);
     let button = document.querySelector(`.add-to-cart-button[onclick="addToCart(${Math.floor((itemId - 1) / 4)}, ${(itemId - 1) % 4}, this)"]`);
-
     if (button) {
         let count = cart.filter(item => item.id === itemId).length - 1;
         if (count > 0) {
-            button.innerHTML = `<b class="cart-count">${count}x</b>`;
-        }
+            button.innerHTML = `<b class="cart-count">${count}x</b>`;}
         else {
-            button.textContent = "Add";
-        }
-    }
+            button.textContent = "Add";}}
     if (index !== -1) {
-        cart.splice(index, 1);// Entferne das Element aus dem Warenkorb
-    }
-    
-    if (cart.length === 0) {// Wenn der Warenkorb leer ist, setze alle "In den Warenkorb" Buttons zurück
+        cart.splice(index, 1);}
+    if (cart.length === 0) {
         let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
         AddToCartButton.forEach(button => {
-            button.textContent = "Add";
-        });
-    }
+            button.textContent = "Add";});}
     updateCart();
 }
 
@@ -233,7 +181,13 @@ function setupStarRating() {
         }
         output.textContent = `Rating: ${rating}/5`;
     }
+    StarsRunTrough();
+}
 
+function StarsRunTrough() {
+    let stars = document.querySelectorAll('.star');
+    let output = document.getElementById('rating-output');
+    if (!output || stars.length === 0) return;
     stars.forEach((star, index) => {
         star.addEventListener('click', () => {
             stars.forEach(s => s.classList.remove('active'));
@@ -246,10 +200,7 @@ function setupStarRating() {
         });
     });
 }
-function closeBasket() {
-    const popup = document.getElementById('basketOpen');
-    disappear(popup, 300, 0, 300);
-}
+
 function removeOneItem(itemId) {
     let removeButton = document.getElementById(`remove-one-item-${itemId}`);
     let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
@@ -263,4 +214,52 @@ function removeOneItem(itemId) {
     }
     updateCart();
     removeFromCart(itemId);
+}
+
+function Payment() {
+    let orderontheway = document.getElementById('order');
+    let cartEmptyElement = document.getElementById('cart_empty');
+    let cartItemsElement = document.getElementById('cart-items');
+    
+    if (cartEmptyElement) {
+        cartEmptyElement.innerHTML = ``;
+    }
+    if (cart.length === 0) {
+        if (cartEmptyElement) {
+            cartEmptyElement.innerHTML = "Bitte fügen Sie Artikel hinzu, bevor Sie zur Kasse gehen.";
+            setTimeout(() => {
+                cartEmptyElement.innerHTML = 'Warenkorb ist leer';
+            }, 3000);
+        }
+        return;
+    }
+    
+    if (orderontheway) {
+        cartItemsElement.style.display = 'none';
+        cartEmptyElement.style.display = 'none';
+        orderontheway.style.display = 'flex';
+        if (cartItemsElement) {
+            cartItemsElement.innerHTML = '';
+        }
+
+        orderontheway.innerHTML = `<h2>Vielen Dank für Ihre Bestellung!</h2>
+        <img class="thankyouimage" src="./assets/image/BestellungUnterwegs.png" alt="Thank You Image">
+        <p>Ihre Zahlung wurde erfolgreich verarbeitet</p>
+        <p>Ihre Bestellung ist unterwegs und wird in Kürze bei Ihnen eintreffen.</p>`;
+        setTimeout(() => {
+            cartItemsElement.style.display = 'block';
+            orderontheway.style.display = 'none';
+            cartEmptyElement.style.display = 'block';
+            cartEmptyElement.innerHTML = 'Warenkorb ist leer';
+        }, 5000);
+        updateCart();
+    }
+    cart = [];
+
+    let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
+
+    AddToCartButton.forEach(button => {
+        button.textContent = "Add";
+    });
+    updateCart();
 }

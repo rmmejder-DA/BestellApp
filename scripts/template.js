@@ -5,7 +5,7 @@ function render() {
     let basket = document.getElementById('basket');
     let ratingElement = document.getElementById('rateStar');
     let basketOpen = document.getElementById('basketOpen');
-    
+
     if (menuheader) {
         menuheader.innerHTML =
             `<span class="basket_cart"></span>
@@ -30,7 +30,7 @@ function render() {
     updateCart();
     if (basket) {
         basket.innerHTML =
-    `<div class="basketPay">
+            `<div class="basketPay">
         <header class="basket_header">
         <button class="close-basket-button" onclick="closeBasket()">&#10006;</button>
         <h2>Warenkorb</h2>
@@ -47,12 +47,11 @@ function render() {
         </footer>
         </div>`;
     }
-    updateCart();   
+    updateCart();
     if (basketOpen) {
         basketOpen.innerHTML = basket.innerHTML;
     }
-        updateCart();
-
+    updateCart();
     if (menuContentRef) {
         let menuHTML = "";
         for (let i = 0; i < menu.length; i++) {
@@ -88,7 +87,7 @@ function render() {
 function updateCart() {
     let cartCount = document.getElementById('cart-count');
     let basketCount = document.getElementById('basketCount');
-    
+
     if (cartCount) {
         cartCount.style.display = cart.length > 0 ? 'block' : 'none';
         cartCount.textContent = cart.length;
@@ -113,6 +112,7 @@ function updateCart() {
     });
     removeAllBtn();
     checkCartEmpty();
+    
     if (cartItems) {
         let cartItemsHTML = '';
         itemMap.forEach(entry => {
