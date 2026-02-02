@@ -9,15 +9,10 @@
 header {
     background-color: #e76c1f;
     width: 100%;
-    z-index: 1001;
 }
 body.noscroll {
     overflow: hidden;
 }
-body {
-    overflow-x: hidden;
-}
-
 footer {
     background-color: #e76c1f;
     width: 100%;
@@ -25,7 +20,13 @@ footer {
     border-top-left-radius: 25%;
     border-top-right-radius: 25%;
 }
-
+.pizza,.burger,.salad{
+    display: flex;
+    justify-content: center;
+    background: black;
+    align-items: center;
+    width: 1920px;
+}
 .header_container {
     height: 128px;
     display: flex;

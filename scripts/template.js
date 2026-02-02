@@ -5,7 +5,7 @@ function render() {
     let basket = document.getElementById('basket');
     let ratingElement = document.getElementById('rateStar');
     let basketOpen = document.getElementById('basketOpen');
-
+    
     if (menuheader) {
         menuheader.innerHTML =
             `<span class="basket_cart"></span>
@@ -30,7 +30,7 @@ function render() {
     updateCart();
     if (basket) {
         basket.innerHTML =
-            `<div class="basketPay">
+    `<div class="basketPay">
         <header class="basket_header">
         <button class="close-basket-button" onclick="closeBasket()">&#10006;</button>
         <h2>Warenkorb</h2>
@@ -43,42 +43,44 @@ function render() {
         <h3 id="total-price">0,00 €</h3>
         <button onclick="removeAll()" class="remove-all-button" id="remove-all-button">Remove</button>
         </div>
-        <button onclick="Payment()" class="payment-button">Pay</button>
+        <button onclick="OrderRenderPayMent()" class="payment-button">Pay</button>
         </footer>
         </div>`;
     }
-    updateCart();
+    updateCart();   
     if (basketOpen) {
         basketOpen.innerHTML = basket.innerHTML;
     }
-    updateCart();
+        updateCart();
+
     if (menuContentRef) {
         let menuHTML = "";
         for (let i = 0; i < menu.length; i++) {
-            menuHTML += `<div class="${menu[i].name.toLowerCase()}">
-                <div class="${menu[i].name.toLowerCase()}small">
-                    <div class="maxwidth1440">
-                        <img class="${menu[i].name.toLowerCase()}SmallImage" src="${imgAssetsPath}${menu[i].name}Icon.png" alt="${menu[i].name}Icon">
+            menuHTML += `
+                    <div class="${menu[i].name}Header">
+                    <div class="line">
+                        <img class="${menu[i].name}SmallImage" src="${imgAssetsPath}${menu[i].name}Icon.png" alt="${menu[i].name}Icon">
                         <h2>${menu[i].name}</h2>
-                    </div>
-                </div>
-                <div class="allContent" id="${menu[i].name.toLowerCase()}-content">`;
+                        </div>
+                    </div>`;
 
             for (let j = 0; j < menu[i].items.length; j++) {
                 menuHTML +=
-                    `<div class="menu-item">
+                    `<div class="spacer">
+                    <div class="menu-item">
                     <div class="overlay">
                     <img class="burger-content-image" src="${imgAssetsPath}${menu[i].items[j].image}" alt="${menu[i].items[j].name}">
-                    <span>${menu[i].items[j].name}</span><span class="price"> € ${menu[i].items[j].price.toFixed(2)}</span>
+                    <span>${menu[i].items[j].name}</span>
+                    <span class="price"> € ${menu[i].items[j].price.toFixed(2)}</span>
                     </div>
                     <i class="description-text" id="description">${menu[i].items[j].Beschreibung || ''}</i>
                     <div class="button-container">
                     <button onclick="addToCart(${i}, ${j}, this)" class="add-to-cart-button">Add</button>
                     <button onclick ="removeFromCart(${menu[i].items[j].id})" class="remove-from-cart-button">&#128465;</button>
                     </div>
+                    </div>
                 </div>`;
             }
-            menuHTML += `</div></div>`;
         }
         menuContentRef.innerHTML = menuHTML;
     }
@@ -87,7 +89,7 @@ function render() {
 function updateCart() {
     let cartCount = document.getElementById('cart-count');
     let basketCount = document.getElementById('basketCount');
-
+    
     if (cartCount) {
         cartCount.style.display = cart.length > 0 ? 'block' : 'none';
         cartCount.textContent = cart.length;
@@ -112,7 +114,6 @@ function updateCart() {
     });
     removeAllBtn();
     checkCartEmpty();
-    
     if (cartItems) {
         let cartItemsHTML = '';
         itemMap.forEach(entry => {
@@ -131,4 +132,48 @@ function updateCart() {
     }
     let totalPriceEl = document.getElementById('total-price');
     if (totalPriceEl) totalPriceEl.textContent = `Total ${totalPrice.toFixed(2)} €`;
+}
+
+function OrderRenderPayMent() {
+    let orderontheway = document.getElementById('order');
+    let cartEmptyElement = document.getElementById('cart_empty');
+    let cartItemsElement = document.getElementById('cart-items');
+    if (cartEmptyElement) {
+        cartEmptyElement.innerHTML = ``;}
+    if (cart.length === 0) {
+        if (cartEmptyElement) {
+            cartEmptyElement.innerHTML = "Bitte fügen Sie Artikel hinzu, bevor Sie zur Kasse gehen.";
+            setTimeout(() => {
+                cartEmptyElement.innerHTML = 'Warenkorb ist leer';
+            }, 3000);
+        }
+        return;
+    }
+
+    if (orderontheway) {
+        cartItemsElement.style.display = 'none';
+        cartEmptyElement.style.display = 'none';
+        orderontheway.style.display = 'flex';
+        if (cartItemsElement) {
+            cartItemsElement.innerHTML = '';
+        }
+
+        orderontheway.innerHTML = `<h2>Vielen Dank für Ihre Bestellung!</h2>
+        <img class="thankyouimage" src="./assets/image/BestellungUnterwegs.png" alt="Thank You Image">
+        <p>Ihre Zahlung wurde erfolgreich verarbeitet</p>
+        <p>Ihre Bestellung ist unterwegs und wird in Kürze bei Ihnen eintreffen.</p>`;
+        setTimeout(() => {
+            cartItemsElement.style.display = 'block';// Zeigt die Anzeige der Warenkorbartikel wieder an
+            orderontheway.style.display = 'none';// Versteckt die Bestellbestätigungsnachricht nach 5 Sekunden
+            cartEmptyElement.style.display = 'block';// Zeigt die leere Warenkorbanzeige wieder an
+            cartEmptyElement.innerHTML = 'Warenkorb ist leer';
+        }, 5000);
+        updateCart();
+    }
+    cart = [];
+    let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
+    AddToCartButton.forEach(button => {
+        button.textContent = "Add";
+    });
+    updateCart();
 }

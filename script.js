@@ -1,36 +1,35 @@
 function openCart() {
     const popup = document.getElementById('basketOpen');
-    const openBtn = document.getElementById('openBtn')
+    const openBtn = document.getElementById('openBtn');
     if (popup) {
         popup.innerHTML = basket.innerHTML;
-        document.body.classList.add('noscroll');
         updateCart();
     }
     openBtn.addEventListener('click', (event) => {
         popup.style.display = 'block';
-        event.stopPropagation();
+        document.body.classList.add('noscroll');
+        event.stopPropagation(); // Verhindert, dass der Klick sofort wieder schließt
     });
     Handler();
     appear(popup, 300, 300, 0);
 }
 
 function Handler() {
-    let popup = document.getElementById('basketOpen');
     let closePopupHandler;
     let closeOnEscapeHandler;
-    closePopupHandler = function () {
-        closeBasket();
-        document.removeEventListener('click', closePopupHandler);
-    }
-    closeOnEscapeHandler = function (event) {
-        if (event.key === 'Escape') {
-            closeBasket();
-            document.removeEventListener('keydown', closeOnEscapeHandler);
+    let popup = document.getElementById('basketOpen');
+    closePopupHandler = (event) => {
+        if (!popup.contains(event.target)) {
+            disappear(popup, 300, 0, 300);
         }
     };
     document.addEventListener('click', closePopupHandler);
+    closeOnEscapeHandler = (event) => {
+        if (event.key === 'Escape') {
+            disappear(popup, 300, 0, 300);
+        }
+    };
     document.addEventListener('keydown', closeOnEscapeHandler);
-    appear(popup, 300, 300, 0);
 }
 
 function closeBasket() {
@@ -99,7 +98,6 @@ function checkCartEmpty() {
 function removeAll() {
     cart = [];
     let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
-
     AddToCartButton.forEach(button => {
         button.textContent = "Add";
     });
@@ -138,25 +136,31 @@ function addCart(itemId) {
 }
 
 function removeFromCart(itemId) {
-    let index = cart.findIndex(item => item.id === itemId);
+    let index = cart.findIndex(item => item.id === itemId);//
     let button = document.querySelector(`.add-to-cart-button[onclick="addToCart(${Math.floor((itemId - 1) / 4)}, ${(itemId - 1) % 4}, this)"]`);
     if (button) {
         let count = cart.filter(item => item.id === itemId).length - 1;
         if (count > 0) {
-            button.innerHTML = `<b class="cart-count">${count}x</b>`;}
+            button.innerHTML = `<b class="cart-count">${count}x</b>`;
+        }
         else {
-            button.textContent = "Add";}}
+            button.textContent = "Add";
+        }
+    }
     if (index !== -1) {
-        cart.splice(index, 1);}
+        cart.splice(index, 1);
+    }
     if (cart.length === 0) {
         let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
         AddToCartButton.forEach(button => {
-            button.textContent = "Add";});}
+            button.textContent = "Add";
+        });
+    }
     updateCart();
 }
 
 function removeAllBtn() {
-    let removeAllButton = document.getElementById('remove-all-button');// Alles entfernen Button
+    let removeAllButton = document.getElementById('remove-all-button');
     if (removeAllButton) {
         if (cart.length === 0) {
             removeAllButton.style.display = 'none';
@@ -169,11 +173,8 @@ function removeAllBtn() {
 function setupStarRating() {
     let stars = document.querySelectorAll('.star');
     let output = document.getElementById('rating-output');
-
     if (!output || stars.length === 0) return;
-
     let savedRating = localStorage.getItem('burgerHausRating');
-
     if (savedRating) {
         let rating = parseInt(savedRating);
         for (let i = 0; i < rating; i++) {
@@ -181,13 +182,6 @@ function setupStarRating() {
         }
         output.textContent = `Rating: ${rating}/5`;
     }
-    StarsRunTrough();
-}
-
-function StarsRunTrough() {
-    let stars = document.querySelectorAll('.star');
-    let output = document.getElementById('rating-output');
-    if (!output || stars.length === 0) return;
     stars.forEach((star, index) => {
         star.addEventListener('click', () => {
             stars.forEach(s => s.classList.remove('active'));
@@ -214,52 +208,4 @@ function removeOneItem(itemId) {
     }
     updateCart();
     removeFromCart(itemId);
-}
-
-function Payment() {
-    let orderontheway = document.getElementById('order');
-    let cartEmptyElement = document.getElementById('cart_empty');
-    let cartItemsElement = document.getElementById('cart-items');
-    
-    if (cartEmptyElement) {
-        cartEmptyElement.innerHTML = ``;
-    }
-    if (cart.length === 0) {
-        if (cartEmptyElement) {
-            cartEmptyElement.innerHTML = "Bitte fügen Sie Artikel hinzu, bevor Sie zur Kasse gehen.";
-            setTimeout(() => {
-                cartEmptyElement.innerHTML = 'Warenkorb ist leer';
-            }, 3000);
-        }
-        return;
-    }
-    
-    if (orderontheway) {
-        cartItemsElement.style.display = 'none';
-        cartEmptyElement.style.display = 'none';
-        orderontheway.style.display = 'flex';
-        if (cartItemsElement) {
-            cartItemsElement.innerHTML = '';
-        }
-
-        orderontheway.innerHTML = `<h2>Vielen Dank für Ihre Bestellung!</h2>
-        <img class="thankyouimage" src="./assets/image/BestellungUnterwegs.png" alt="Thank You Image">
-        <p>Ihre Zahlung wurde erfolgreich verarbeitet</p>
-        <p>Ihre Bestellung ist unterwegs und wird in Kürze bei Ihnen eintreffen.</p>`;
-        setTimeout(() => {
-            cartItemsElement.style.display = 'block';
-            orderontheway.style.display = 'none';
-            cartEmptyElement.style.display = 'block';
-            cartEmptyElement.innerHTML = 'Warenkorb ist leer';
-        }, 5000);
-        updateCart();
-    }
-    cart = [];
-
-    let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
-
-    AddToCartButton.forEach(button => {
-        button.textContent = "Add";
-    });
-    updateCart();
 }
