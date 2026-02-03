@@ -16,20 +16,22 @@ function openCart() {
 
 function Handler() {
     let closePopupHandler;
-    let closeOnEscapeHandler;
+    let clickOver;
     let popup = document.getElementById('basketOpen');
     closePopupHandler = (event) => {
         if (!popup.contains(event.target)) {
             disappear(popup, 300, 0, 300);
+            document.body.classList.remove('noscroll'); // Scrollen wieder aktivieren
         }
     };
     document.addEventListener('click', closePopupHandler);
-    closeOnEscapeHandler = (event) => {
-        if (event.key === 'Escape') {
-            disappear(popup, 300, 0, 300);
+    clickOver = () => {
+        if (popup.style.display === 'none') {
+            document.removeEventListener('click', closePopupHandler);
+            document.removeEventListener('click', clickOver);
         }
     };
-    document.addEventListener('keydown', closeOnEscapeHandler);
+    document.addEventListener('click', clickOver);
 }
 
 function closeBasket() {
@@ -40,6 +42,17 @@ function closeBasket() {
     );
     document.body.classList.remove('noscroll'); // Scrollen wieder aktivieren
     disappear(popup, 300, 0, 300);
+}
+
+function appear(element, duration, translateXStart, translateXEnd) {
+    element.style.transition = `transform ${duration}ms ease-out, opacity ${duration}ms ease-out`;
+    element.style.transform = `translateX(${translateXStart}px)`;
+    element.style.opacity = '0';
+    requestAnimationFrame(() => {
+        element.style.transform = `translateX(${translateXEnd}px)`;
+        element.style.opacity = '1';
+    });
+    updateCart();
 }
 
 function disappear(element, duration, translateXStart, translateXEnd) {
@@ -54,35 +67,6 @@ function disappear(element, duration, translateXStart, translateXEnd) {
         element.style.display = 'none';
     }, duration);
     updateCart();
-}
-
-function appear(element, duration, translateXStart, translateXEnd) {
-    element.style.transition = `transform ${duration}ms ease-out, opacity ${duration}ms ease-out`;
-    element.style.transform = `translateX(${translateXStart}px)`;
-    element.style.opacity = '0';
-    requestAnimationFrame(() => {
-        element.style.transform = `translateX(${translateXEnd}px)`;
-        element.style.opacity = '1';
-    });
-    updateCart();
-}
-
-function ratingDeineObjektID(rating) {
-    let ratingElement = document.getElementById('rating');
-    rating = Math.max(0, Math.min(5, rating));
-    if (ratingElement) {
-        let stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
-        ratingElement.style.color = 'gold';
-        ratingElement.textContent = stars;
-        let rateDiv = document.createElement('div');
-        rateDiv.className = 'Rate';
-        rateDiv.textContent = `(${rating} von 5 Sternen)`;
-        ratingElement.appendChild(rateDiv);
-    }
-}
-
-function saveRate(rating) {
-    localStorage.setItem('burgerHausRating', rating);
 }
 
 function checkCartEmpty() {
@@ -105,7 +89,7 @@ function removeAll() {
 }
 
 function addToCart(categoryIndex, itemIndex, button) {
-    let selectedItem = menu[categoryIndex].items[itemIndex];
+    let selectedItem = menu[categoryIndex].items[itemIndex];// 
     let count = cart.filter(item => item.id === selectedItem.id).length + 1;
     if (button) {
         button.innerHTML = `<b class="cart-count">${count}x</b>`;
@@ -170,6 +154,21 @@ function removeAllBtn() {
     }
 }
 
+function removeOneItem(itemId) {
+    let removeButton = document.getElementById(`remove-one-item-${itemId}`);
+    let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
+    cart = cart.filter(item => item.id !== itemId);
+    if (removeButton) {
+        removeButton.style.display = 'none';
+    } else {
+        AddToCartButton.forEach(button => {
+            button.textContent = "Add";
+        });
+    }
+    updateCart();
+    removeFromCart(itemId);
+}
+
 function setupStarRating() {
     let stars = document.querySelectorAll('.star');
     let output = document.getElementById('rating-output');
@@ -195,17 +194,82 @@ function setupStarRating() {
     });
 }
 
-function removeOneItem(itemId) {
-    let removeButton = document.getElementById(`remove-one-item-${itemId}`);
-    let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
-    cart = cart.filter(item => item.id !== itemId);
-    if (removeButton) {
-        removeButton.style.display = 'none';
-    } else {
-        AddToCartButton.forEach(button => {
-            button.textContent = "Add";
-        });
+function ratingDeineObjektID(rating) {
+    let ratingElement = document.getElementById('rating');
+    rating = Math.max(0, Math.min(5, rating));
+    if (ratingElement) {
+        let stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+        ratingElement.style.color = 'gold';
+        ratingElement.textContent = stars;
+        let rateDiv = document.createElement('div');
+        rateDiv.className = 'Rate';
+        rateDiv.textContent = `(${rating} von 5 Sternen)`;
+        ratingElement.appendChild(rateDiv);
     }
+}
+
+function saveRate(rating) {
+    localStorage.setItem('burgerHausRating', rating);
+}
+
+function processOrder() {
+    let orderontheway = document.getElementById('order');
+    let cartEmptyElement = document.getElementById('cart_empty');
+    let cartItemsElement = document.getElementById('cart-items');
+    if (orderontheway && cartItemsElement && cartEmptyElement) {
+        cartItemsElement.style.display = 'none';
+        cartEmptyElement.style.display = 'none';
+        orderontheway.style.display = 'flex';
+        cartItemsElement.innerHTML = '';
+    }
+}
+
+function BtnUpdate() {
+    cart = [];
+    let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
+    AddToCartButton.forEach(button => {
+        button.textContent = "Add";
+    });
     updateCart();
-    removeFromCart(itemId);
+}
+
+function OrderRenderPayMent() {
+    let cartEmptyElement = document.getElementById('cart_empty');
+    if (cartEmptyElement) {
+        cartEmptyElement.innerHTML = ``;}
+    if (cart.length === 0) {
+        if (cartEmptyElement) {
+            cartEmptyElement.innerHTML = "Bitte fügen Sie Artikel hinzu, bevor Sie zur Kasse gehen.";
+            setTimeout(() => {
+                cartEmptyElement.innerHTML = 'Warenkorb ist leer';
+            }, 3000);
+        }return;
+    }
+    processOrder();
+    removeAllBtn();
+    completeOrder();
+    removeAll();
+}
+
+function cartandbasketcount() {
+    let cartCount = document.getElementById('cart-count');
+    let basketCount = document.getElementById('basketCount');
+    if (cartCount) {
+        cartCount.style.display = cart.length > 0 ? 'block' : 'none';
+        cartCount.textContent = cart.length;
+    }
+    if (basketCount) {
+        basketCount.style.display = cart.length > 0 ? 'block' : 'none';
+        basketCount.textContent = cart.length;
+    }
+}
+
+function TotalPrice() {
+    let totalPriceEl = document.getElementById('total-price');
+    let totalPrice = 0;
+
+    cart.forEach(item => {
+        totalPrice += item.price;
+    });
+    if (totalPriceEl) totalPriceEl.textContent = `Total ${totalPrice.toFixed(2)} €`;
 }

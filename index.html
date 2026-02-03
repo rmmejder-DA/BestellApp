@@ -11,48 +11,63 @@
     <link rel="stylesheet" href="./styles/standard.css">
     <link rel="stylesheet" href="./styles/media.css">
     <link rel="icon" type="image/png" href="assets/image/Favicon.jpg">
-
+    <script src="./scripts/template.js"></script>
     <script src="script.js"></script>
     <script src="./scripts/db.js"></script>
-    <script src="./scripts/template.js"></script>
+
 </head>
 
 <body onload="render()">
     <header>
         <div class="header_container">
             <img class="LogoLinksHeader" src="./assets/image/LogoLinksHeader.png" alt="LogoLinksHeader">
-            <div id="menu-header" class="basket"></div>
+            <div id="menu-header" class="basket">
+                <span class="basket_cart"></span>
+                <span class="basket_cart"></span>
+                <span class="basket_cart"></span>
+            </div>
         </div>
     </header>
-        <div class="imgunderheader">
-            <div>
-                <img class="BigImage" src="./assets/image/BigImage.jpg" alt="Bannerbild des BurgerHaus Restaurants">
+    <div class="imgunderheader">
+        <div>
+            <img class="BigImage" src="./assets/image/BigImage.jpg" alt="Bannerbild des BurgerHaus Restaurants">
+        </div>
+        <div class="BI">
+            <img class="burgerImage" src="./assets/image/BurgerLogo.png" alt="BurgerHaus logo">
+        </div>
+    </div>
+
+    <div class="underH1">
+        <div class="BurgerHausplusRezension" id="rateStar">
+            <h1>BurgerHaus</h1>
+            <div class="stars">
+                <span class="star" data-value="1">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="5">★</span>
             </div>
-            <div class="BI">
-                <img class="burgerImage" src="./assets/image/BurgerLogo.png" alt="BurgerHaus logo">
-            </div>
+            <i id="rating-output">Rating: 0/5</i>
+            <b>Comfort Food</b>
         </div>
+    </div>
 
-        <div class="underH1">
-            <div class="BurgerHausplusRezension" id="rateStar"></div>
-        </div>
+    <div class="content-menu-basket">
 
-        <div class="content-menu-basket">
+        <section class="menu-wrapper">
+            <div id="MenuContent" class="MenuContent"></div>
+        </section>
 
-            <section class="menu-wrapper">
-                <div id="MenuContent" class="MenuContent"></div>
-            </section>
+        <section class="shoppingcartsectionwrapper">
+            <div class="shoppingcartsection" id="basket"></div>
+        </section>
 
-            <section class="shoppingcartsectionwrapper">
-                <div class="shoppingcartsection" id="basket"></div>
-            </section>
-
-        </div>
-        <div onclick="openCart()" id="openBtn" class="basketOpenWrapper" tabindex="0">
-            <img class="basketLogo" src="./assets/image/shoppingcar.png" alt="Basket">
-            <b class="countby" id="basketCount"></b>
-            <div class="shoppingcartsectionOpen" id="basketOpen"></div>
-        </div>
+    </div>
+    <div onclick="openCart()" id="openBtn" class="basketOpenWrapper" tabindex="0">
+        <img class="basketLogo" src="./assets/image/shoppingcar.png" alt="Basket">
+        <b class="countby" id="basketCount"></b>
+        <div class="shoppingcartsectionOpen" id="basketOpen"></div>
+    </div>
 
     <footer>
         <div class="footer_container">

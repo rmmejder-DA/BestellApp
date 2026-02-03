@@ -1,36 +1,14 @@
 
 function render() {
     let menuContentRef = document.getElementById('MenuContent');
-    let menuheader = document.getElementById('menu-header');
     let basket = document.getElementById('basket');
-    let ratingElement = document.getElementById('rateStar');
     let basketOpen = document.getElementById('basketOpen');
-    
-    if (menuheader) {
-        menuheader.innerHTML =
-            `<span class="basket_cart"></span>
-        <span class="basket_cart"></span>
-        <span class="basket_cart"></span>`;
-    }
-    updateCart();
-    if (ratingElement) {
-        ratingElement.innerHTML = `
-                <h1>BurgerHaus</h1>
-                    <div class="stars">
-                        <span class="star" data-value="1">★</span>
-                        <span class="star" data-value="2">★</span>
-                        <span class="star" data-value="3">★</span>
-                        <span class="star" data-value="4">★</span>
-                        <span class="star" data-value="5">★</span>
-                    </div>
-                        <i id="rating-output">Rating: 0/5</i>
-                    <b>Comfort Food</b>`;
-    }
+
     setupStarRating();
     updateCart();
     if (basket) {
         basket.innerHTML =
-    `<div class="basketPay">
+            `<div class="basketPay">
         <header class="basket_header">
         <button class="close-basket-button" onclick="closeBasket()">&#10006;</button>
         <h2>Warenkorb</h2>
@@ -47,11 +25,12 @@ function render() {
         </footer>
         </div>`;
     }
-    updateCart();   
+    updateCart();
+    TotalPrice();
     if (basketOpen) {
         basketOpen.innerHTML = basket.innerHTML;
     }
-        updateCart();
+    updateCart();
 
     if (menuContentRef) {
         let menuHTML = "";
@@ -87,38 +66,25 @@ function render() {
 }
 
 function updateCart() {
-    let cartCount = document.getElementById('cart-count');
-    let basketCount = document.getElementById('basketCount');
-    
-    if (cartCount) {
-        cartCount.style.display = cart.length > 0 ? 'block' : 'none';
-        cartCount.textContent = cart.length;
-    }
-
-    if (basketCount) {
-        basketCount.style.display = cart.length > 0 ? 'block' : 'none';
-        basketCount.textContent = cart.length;
-    }
-
+    cartandbasketcount();
     let cartItems = document.getElementById('cart-items');
-    let totalPrice = 0;
     if (!cartItems) return;
-    let itemMap = new Map();
-    cart.forEach(item => {
-        if (itemMap.has(item.id)) {
-            itemMap.get(item.id).count++;
+    removeAllBtn();
+    checkCartEmpty();
+    let itemMap = new Map();// Map um einzigartige Items und deren Anzahl zu speichern
+    cart.forEach((item) => {
+        if (itemMap.has(item.id)) {//.has checkt ob der key existiert
+            itemMap.get(item.id).count += 1;//.get gibt den value des keys zurück
         } else {
             itemMap.set(item.id, { item: item, count: 1 });
         }
-        totalPrice += item.price;
     });
-    removeAllBtn();
-    checkCartEmpty();
+    TotalPrice();
     if (cartItems) {
         let cartItemsHTML = '';
-        itemMap.forEach(entry => {
+        itemMap.forEach((entry) => {
             cartItemsHTML +=
-                `<div class="cartall">
+            `<div class="cartall">
             <button class="cart-item-remove" id="remove-one-item-${entry.item.id}" onclick="removeOneItem(${entry.item.id})">&#128465;</button>
             <p>${entry.item.name} - € ${entry.item.price.toFixed(2)}</p>
 
@@ -130,50 +96,26 @@ function updateCart() {
         });
         cartItems.innerHTML = cartItemsHTML;
     }
-    let totalPriceEl = document.getElementById('total-price');
-    if (totalPriceEl) totalPriceEl.textContent = `Total ${totalPrice.toFixed(2)} €`;
 }
 
-function OrderRenderPayMent() {
-    let orderontheway = document.getElementById('order');
-    let cartEmptyElement = document.getElementById('cart_empty');
+function completeOrder() {
     let cartItemsElement = document.getElementById('cart-items');
-    if (cartEmptyElement) {
-        cartEmptyElement.innerHTML = ``;}
-    if (cart.length === 0) {
-        if (cartEmptyElement) {
-            cartEmptyElement.innerHTML = "Bitte fügen Sie Artikel hinzu, bevor Sie zur Kasse gehen.";
-            setTimeout(() => {
-                cartEmptyElement.innerHTML = 'Warenkorb ist leer';
-            }, 3000);
-        }
-        return;
-    }
+    let cartEmptyElement = document.getElementById('cart_empty');
+    let orderontheway = document.getElementById('order');
 
     if (orderontheway) {
-        cartItemsElement.style.display = 'none';
-        cartEmptyElement.style.display = 'none';
-        orderontheway.style.display = 'flex';
-        if (cartItemsElement) {
-            cartItemsElement.innerHTML = '';
-        }
-
         orderontheway.innerHTML = `<h2>Vielen Dank für Ihre Bestellung!</h2>
         <img class="thankyouimage" src="./assets/image/BestellungUnterwegs.png" alt="Thank You Image">
         <p>Ihre Zahlung wurde erfolgreich verarbeitet</p>
         <p>Ihre Bestellung ist unterwegs und wird in Kürze bei Ihnen eintreffen.</p>`;
         setTimeout(() => {
-            cartItemsElement.style.display = 'block';// Zeigt die Anzeige der Warenkorbartikel wieder an
-            orderontheway.style.display = 'none';// Versteckt die Bestellbestätigungsnachricht nach 5 Sekunden
-            cartEmptyElement.style.display = 'block';// Zeigt die leere Warenkorbanzeige wieder an
+            cartItemsElement.style.display = 'block';
+            orderontheway.style.display = 'none';
+            cartEmptyElement.style.display = 'block';
             cartEmptyElement.innerHTML = 'Warenkorb ist leer';
         }, 5000);
         updateCart();
     }
-    cart = [];
-    let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
-    AddToCartButton.forEach(button => {
-        button.textContent = "Add";
-    });
-    updateCart();
 }
+
+

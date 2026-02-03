@@ -36,6 +36,8 @@ footer {
     max-width: 1440px;
     margin: 0 auto;
     padding-inline: 10px;
+    padding-right: 52px;
+    padding-left: 32px;
 }
 
 .footer_container {

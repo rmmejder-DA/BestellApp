@@ -229,7 +229,7 @@
 .spacer {
     display: flex;
     max-width: 1440px;
-    width: 100%;
+    width: 95%;
     margin: auto;
     justify-content: flex-start;
 }
@@ -383,7 +383,6 @@
     width: 50px;
     height: 40px;
 }
-
 .basketOpenWrapper {
     display: none;
     position: fixed;
