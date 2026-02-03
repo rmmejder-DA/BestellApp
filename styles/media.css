@@ -70,7 +70,7 @@
 
     }
     .basket_header{
-        justify-content: space-between;
+        justify-content: space-evenly;
     }
     .basket_footer h3 {
         font-size: 16px;
@@ -169,7 +169,7 @@
         justify-content: center;
         align-items: center;
         text-align: center;
-        width: 90% !important;
+        width: 550px;
     }
 
     .add-to-cart-button {
@@ -204,7 +204,10 @@
 
 @media (max-width:1030px) {
     .spacer {
-        width: 100%!important;
+        justify-content: center;
+    }
+    .menu-item {
+        width: 90% !important;
     }
     .description-text {
         padding: 10px;
@@ -228,7 +231,7 @@
     }
 
     .spacer {
-        justify-content: center;
+        align-items: center;
     }
 
     .basketOpenWrapper {
@@ -249,12 +252,9 @@
 }
 
 @media (min-width:1441px) {
-    .menu-item {
-        width: 950px !important;
-    }
 
     .shoppingcartsectionwrapper {
-        right: calc((100vw - 1440px) / 2);
+        right: calc((100vw - 1600px) / 2);
     }
 }
 

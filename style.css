@@ -35,7 +35,7 @@
     height: 700px;
     position: absolute;
     top: 0;
-    right: 0px;
+    right:0;
     background-color: #363534;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
@@ -218,7 +218,7 @@
 
 @keyframes moveImage {
     0% {
-        transform: translateY(-50px);
+        transform: translateY(-20px);
     }
 
     100% {
@@ -232,6 +232,7 @@
     width: 95%;
     margin: auto;
     justify-content: flex-start;
+    flex-direction: column;
 }
 
 .line {
@@ -252,7 +253,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    width: 950px;
+    width: 990px;
     background-color: #fdeadc;
     position: relative;
     border-radius: 8px;

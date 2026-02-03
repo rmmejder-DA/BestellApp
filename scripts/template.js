@@ -1,14 +1,34 @@
-
 function render() {
-    let menuContentRef = document.getElementById('MenuContent');
-    let basket = document.getElementById('basket');
     let basketOpen = document.getElementById('basketOpen');
-
-    setupStarRating();
+    if (basketOpen) {
+    basketOpen.innerHTML = '';
+    basketOpen.innerHTML += AllNotes();
+    }
+    removeAll();
+    checkCartEmpty();
     updateCart();
+    TotalPrice();
+    let basket = document.getElementById('basket');
     if (basket) {
-        basket.innerHTML =
-            `<div class="basketPay">
+    basket.innerHTML = '';
+    basket.innerHTML += AllNotes();
+    }
+    updateCart();
+    TotalPrice();
+    let menuContentRef = document.getElementById('MenuContent');
+    if (menuContentRef) {
+    for (let i = 0; i < menu.length; i++) {
+        menuContentRef.innerHTML += AllNotes(menu[i],i);
+    }
+    updateCart();
+    TotalPrice();
+    setupStarRating();
+}
+}
+
+function AllNotes(menuItem, i) { 
+    if (!menuItem && !i) {
+    return `<div class="basketPay">
         <header class="basket_header">
         <button class="close-basket-button" onclick="closeBasket()">&#10006;</button>
         <h2>Warenkorb</h2>
@@ -24,45 +44,35 @@ function render() {
         <button onclick="OrderRenderPayMent()" class="payment-button">Pay</button>
         </footer>
         </div>`;
-    }
-    updateCart();
-    TotalPrice();
-    if (basketOpen) {
-        basketOpen.innerHTML = basket.innerHTML;
-    }
-    updateCart();
-
-    if (menuContentRef) {
-        let menuHTML = "";
-        for (let i = 0; i < menu.length; i++) {
-            menuHTML += `
-                    <div class="${menu[i].name}Header">
-                    <div class="line">
-                        <img class="${menu[i].name}SmallImage" src="${imgAssetsPath}${menu[i].name}Icon.png" alt="${menu[i].name}Icon">
-                        <h2>${menu[i].name}</h2>
-                        </div>
-                    </div>`;
-
-            for (let j = 0; j < menu[i].items.length; j++) {
-                menuHTML +=
-                    `<div class="spacer">
-                    <div class="menu-item">
+} else {
+if (menuItem && i >= 0) {
+    let itemsHTML = '';
+    for (let j = 0; j < menuItem.items.length; j++) {
+        itemsHTML += `<div class="menu-item">
                     <div class="overlay">
-                    <img class="burger-content-image" src="${imgAssetsPath}${menu[i].items[j].image}" alt="${menu[i].items[j].name}">
-                    <span>${menu[i].items[j].name}</span>
-                    <span class="price"> € ${menu[i].items[j].price.toFixed(2)}</span>
+                    <img class="burger-content-image" src="${imgAssetsPath}${menuItem.items[j].image}" alt="${menuItem.items[j].name}">
+                    <span>${menuItem.items[j].name}</span>
+                    <span class="price"> € ${menuItem.items[j].price.toFixed(2)}</span>
                     </div>
-                    <i class="description-text" id="description">${menu[i].items[j].Beschreibung || ''}</i>
+                    <i class="description-text" id="description">${menuItem.items[j].Beschreibung || ''}</i>
                     <div class="button-container">
                     <button onclick="addToCart(${i}, ${j}, this)" class="add-to-cart-button">Add</button>
-                    <button onclick ="removeFromCart(${menu[i].items[j].id})" class="remove-from-cart-button">&#128465;</button>
-                    </div>
+                    <button onclick ="removeFromCart(${menuItem.items[j].id})" class="remove-from-cart-button">&#128465;</button>
                     </div>
                 </div>`;
-            }
-        }
-        menuContentRef.innerHTML = menuHTML;
-    }
+    } if (itemsHTML) {
+    return `<div class="${menu[i].name}Header">
+                     <div class="line">                         
+                     <img class="${menu[i].name}SmallImage" src="${imgAssetsPath}${menu[i].name}Icon.png" alt="${menu[i].name}Icon">
+                         <h2>${menu[i].name}</h2>
+                         </div>
+                     </div>
+                        <div class="${menu[i].name}Content">
+                    <div class="spacer">
+                    ${itemsHTML}
+                </div>`;}
+}
+}
 }
 
 function updateCart() {
@@ -87,10 +97,9 @@ function updateCart() {
             `<div class="cartall">
             <button class="cart-item-remove" id="remove-one-item-${entry.item.id}" onclick="removeOneItem(${entry.item.id})">&#128465;</button>
             <p>${entry.item.name} - € ${entry.item.price.toFixed(2)}</p>
-
             <div class="cart-buttons">
             <button class="add-button" onclick="addCart(${entry.item.id})">&#x2795;</button>
-                        <b class="cart-count">${entry.count}x</b>
+            <b class="cart-count">${entry.count}x</b>
             <button class="remove-button" onclick="removeFromCart(${entry.item.id})">&#x2796;</button>  
             </div></div>`;
         });
@@ -114,8 +123,5 @@ function completeOrder() {
             cartEmptyElement.style.display = 'block';
             cartEmptyElement.innerHTML = 'Warenkorb ist leer';
         }, 5000);
-        updateCart();
     }
 }
-
-

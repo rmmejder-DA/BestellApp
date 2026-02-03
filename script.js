@@ -11,7 +11,7 @@ function openCart() {
         event.stopPropagation(); // Verhindert, dass der Klick sofort wieder schließt
     });
     Handler();
-    appear(popup, 300, 300, 0);
+    animateleft(popup, 300, 300, 0);
 }
 
 function Handler() {
@@ -20,7 +20,7 @@ function Handler() {
     let popup = document.getElementById('basketOpen');
     closePopupHandler = (event) => {
         if (!popup.contains(event.target)) {
-            disappear(popup, 300, 0, 300);
+            animateright(popup, 300, 0, 300);
             document.body.classList.remove('noscroll'); // Scrollen wieder aktivieren
         }
     };
@@ -38,13 +38,14 @@ function closeBasket() {
     const popup = document.getElementById('basketOpen');
     popup.addEventListener('click', (event) => {
         event.stopPropagation(); // Verhindert, dass der Klick das Popup schließt
-    }
-    );
+    });
     document.body.classList.remove('noscroll'); // Scrollen wieder aktivieren
-    disappear(popup, 300, 0, 300);
+    animateright(popup, 300, 0, 300);
+    updateCart();
+    TotalPrice();
 }
 
-function appear(element, duration, translateXStart, translateXEnd) {
+function animateleft(element, duration, translateXStart, translateXEnd) {
     element.style.transition = `transform ${duration}ms ease-out, opacity ${duration}ms ease-out`;
     element.style.transform = `translateX(${translateXStart}px)`;
     element.style.opacity = '0';
@@ -55,7 +56,7 @@ function appear(element, duration, translateXStart, translateXEnd) {
     updateCart();
 }
 
-function disappear(element, duration, translateXStart, translateXEnd) {
+function animateright(element, duration, translateXStart, translateXEnd) {
     element.style.transition = `transform ${duration}ms ease-in, opacity ${duration}ms ease-in`;
     element.style.transform = `translateX(${translateXStart}px)`;
     element.style.opacity = '1';
@@ -86,6 +87,9 @@ function removeAll() {
         button.textContent = "Add";
     });
     updateCart();
+    checkCartEmpty();
+    TotalPrice();
+    removeAllBtn();
 }
 
 function addToCart(categoryIndex, itemIndex, button) {
@@ -94,6 +98,7 @@ function addToCart(categoryIndex, itemIndex, button) {
     if (button) {
         button.innerHTML = `<b class="cart-count">${count}x</b>`;
     }
+    let basketCount = document.getElementById('basketCount');
     if (basketCount) {
         basketCount.innerHTML = `<b class="cart-count">${count}x</b>`;
     }
@@ -117,6 +122,7 @@ function addCart(itemId) {
         cart.push(item);
     }
     updateCart();
+    TotalPrice();
 }
 
 function removeFromCart(itemId) {
@@ -141,6 +147,7 @@ function removeFromCart(itemId) {
         });
     }
     updateCart();
+    TotalPrice();
 }
 
 function removeAllBtn() {
@@ -212,6 +219,15 @@ function saveRate(rating) {
     localStorage.setItem('burgerHausRating', rating);
 }
 
+
+
+function BtnUpdate() {
+    cart = [];
+    let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
+    AddToCartButton.forEach(button => {
+        button.textContent = "Add";
+    });
+}
 function processOrder() {
     let orderontheway = document.getElementById('order');
     let cartEmptyElement = document.getElementById('cart_empty');
@@ -222,33 +238,28 @@ function processOrder() {
         orderontheway.style.display = 'flex';
         cartItemsElement.innerHTML = '';
     }
-}
 
-function BtnUpdate() {
-    cart = [];
-    let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
-    AddToCartButton.forEach(button => {
-        button.textContent = "Add";
-    });
-    updateCart();
 }
 
 function OrderRenderPayMent() {
     let cartEmptyElement = document.getElementById('cart_empty');
     if (cartEmptyElement) {
-        cartEmptyElement.innerHTML = ``;}
+        cartEmptyElement.innerHTML = '';
+    }
     if (cart.length === 0) {
         if (cartEmptyElement) {
             cartEmptyElement.innerHTML = "Bitte fügen Sie Artikel hinzu, bevor Sie zur Kasse gehen.";
             setTimeout(() => {
                 cartEmptyElement.innerHTML = 'Warenkorb ist leer';
             }, 3000);
-        }return;
+        }
+        return;
     }
-    processOrder();
-    removeAllBtn();
     completeOrder();
     removeAll();
+    processOrder();
+    updateCart();
+    TotalPrice();
 }
 
 function cartandbasketcount() {
@@ -267,7 +278,6 @@ function cartandbasketcount() {
 function TotalPrice() {
     let totalPriceEl = document.getElementById('total-price');
     let totalPrice = 0;
-
     cart.forEach(item => {
         totalPrice += item.price;
     });
