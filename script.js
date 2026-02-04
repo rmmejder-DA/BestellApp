@@ -3,8 +3,8 @@ function openCart() {
     const openBtn = document.getElementById('openBtn');
     if (popup) {
         popup.innerHTML = basket.innerHTML;
-        updateCart();
     }
+    updateCart();
     openBtn.addEventListener('click', (event) => {
         popup.style.display = 'block';
         document.body.classList.add('noscroll');
@@ -108,23 +108,6 @@ function addToCart(categoryIndex, itemIndex, button) {
     }
 }
 
-function addCart(itemId) {
-    let item = null;
-    for (let i = 0; i < menu.length; i++) {
-        for (let j = 0; j < menu[i].items.length; j++) {
-            if (menu[i].items[j].id === itemId) {
-                item = menu[i].items[j];
-            }
-        }
-        if (item) break;
-    }
-    if (item) {
-        cart.push(item);
-    }
-    updateCart();
-    TotalPrice();
-}
-
 function removeFromCart(itemId) {
     let index = cart.findIndex(item => item.id === itemId);//
     let button = document.querySelector(`.add-to-cart-button[onclick="addToCart(${Math.floor((itemId - 1) / 4)}, ${(itemId - 1) % 4}, this)"]`);
@@ -219,8 +202,6 @@ function saveRate(rating) {
     localStorage.setItem('burgerHausRating', rating);
 }
 
-
-
 function BtnUpdate() {
     cart = [];
     let AddToCartButton = document.querySelectorAll('.add-to-cart-button');
@@ -228,6 +209,7 @@ function BtnUpdate() {
         button.textContent = "Add";
     });
 }
+
 function processOrder() {
     let orderontheway = document.getElementById('order');
     let cartEmptyElement = document.getElementById('cart_empty');
@@ -238,7 +220,6 @@ function processOrder() {
         orderontheway.style.display = 'flex';
         cartItemsElement.innerHTML = '';
     }
-
 }
 
 function OrderRenderPayMent() {
