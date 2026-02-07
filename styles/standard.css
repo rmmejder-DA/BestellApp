@@ -3,16 +3,27 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Palanquin', sans-serif;
-    scroll-behavior: smooth;
+}
+
+
+body {
+  height: 100%;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+html {
+  height: 100%;
+  overflow-y: auto;
 }
 
 header {
     background-color: #e76c1f;
     width: 100%;
 }
-body.noscroll {
-    overflow: hidden;
-}
+
 footer {
     background-color: #e76c1f;
     width: 100%;
@@ -51,25 +62,11 @@ footer {
     padding-inline: 10px;
 }
 
-.order p {
-    font-size: 20px;
-    line-height: 28px;
-    color: #ffffff;
-    text-align: center;
-    font-family: 'Palanquin', sans-serif;
-}
-
 p {
-    font-size: 16px;
+    font-size: 20px;
     line-height: 24px;
-    color: #ffffff;
-    text-align: left;
-    font-family: 'Palanquin', sans-serif;
-}
-
-.added {
-    font-size: 16px;
-    color: #ffffff;
+    color: #000000;
+    text-align: center;
     font-family: 'Palanquin', sans-serif;
 }
 
@@ -108,17 +105,8 @@ h1 {
     font-family: 'Palanquin', sans-serif;
 }
 
-.order h2 {
-    font-size: 32px;
-    margin-bottom: 16px;
-    color: #ffffff;
-    font-weight: bold;
-    text-align: center;
-    font-family: 'Palanquin', sans-serif;
-}
-
 h2 {
-    color: #FFFFFF;
+    color: #ffffff;
     text-align: center;
     font-family: Palanquin;
     font-weight: 700;
@@ -128,13 +116,7 @@ h2 {
 
 h3 {
     font-size: 24px;
-    color: #ffffff;
+    color: #e76c1f; 
     font-weight: bold;
     font-family: 'Palanquin', sans-serif;
-}
-
-.page_content {
-    display: flex;
-    flex-direction: column;
-    padding-inline: 10px;
 }

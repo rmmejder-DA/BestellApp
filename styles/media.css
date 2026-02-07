@@ -12,7 +12,10 @@
     .BigImage {
         height: 250px;
     }
-
+.menu-item-image {
+        width: 100% !important;
+        height: 200px !important;
+}
     .burgerImage {
         bottom: 64px;
     }
@@ -46,19 +49,16 @@
         height: 30px;
     }
 
-    .BurgerSmallImage,
-    .PizzaSmallImage,
-    .SaladSmallImage {
+    .headline-image{
         width: 80px !important;
         height: 80px !important;
     }
-
-    .line {
-        height: 60px;
+    .headline-menu-item {
+        height: 60px !important ;
     }
-
     p {
-        font-size: 14px;
+        font-size: 16px;
+        text-align: center;
     }
 
     b {
@@ -138,6 +138,10 @@
     .basket_cart {
         position: static;
     }
+    .headline-image {
+    width: 94px;
+    height: 94px;
+    }
 }
 
 @media (max-width:850px) {
@@ -170,8 +174,20 @@
         align-items: center;
         text-align: center;
         width: 550px;
+        gap: 10px;
+    }
+    .menu-item-image {
+        width: 400px;
+        height: 200px !important;
     }
 
+     .headline-image {
+        width: 80px !important;
+        height: 80px !important;
+    }
+     .headline-menu-item {
+        height: 60px !important ;
+    }
     .add-to-cart-button {
         margin: 10px auto 10px auto;
     }
@@ -236,6 +252,7 @@
 
     .basketOpenWrapper {
         display: flex;
+        left: 10px;
     }
 
     .menu-wrapper {
@@ -252,7 +269,6 @@
 }
 
 @media (min-width:1441px) {
-
     .shoppingcartsectionwrapper {
         right: calc((100vw - 1600px) / 2);
     }

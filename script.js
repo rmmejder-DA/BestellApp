@@ -11,6 +11,10 @@ function FoodStore() {
         menuContainer.innerHTML += menuItemTemplate(menu[i], i);
     }
     setupStarRating();
+    updateCartCount();
+    closeBasket();
+    updateCartUI();
+    dialogUpdate();
 }
 
 function Pay() {
@@ -26,15 +30,6 @@ function Pay() {
     closeBasket();
     updateCartUI();
     dialogUpdate();
-}
-
-function BtnUpdate(index) {
-    let BtnUpdate = document.getElementById(`menuCount${index}`);
-    if (cart.length === 0) {
-        BtnUpdate.textContent = "";
-    } else {
-        BtnUpdate.textContent = "ADD";
-    }
 }
 
 function plus(id) {
@@ -92,7 +87,7 @@ function updateMenuCount(id) {
     let menuCountElement = document.getElementById(`menuCount${menuIndex}`);
     let cartItem = cart.find(ci => ci.id === id);
     if (menuCountElement) {
-        menuCountElement.textContent = `${cartItem ? cartItem.quantity : ''}`;
+        menuCountElement.textContent = `${cartItem ? cartItem.quantity : 'ADD'}`;
     }
 }
 
@@ -234,5 +229,13 @@ function closeBasket() {
     if (basket && typeof basket.close === "function") {
         basket.close();
     }
+    dialogUpdate();
+}
+
+function removeOneItem(itemId) {
+    cart = cart.filter(item => item.id !== itemId);
+    updateMenuCount(itemId);
+    updateCartCount();
+    updateCartUI();
     dialogUpdate();
 }

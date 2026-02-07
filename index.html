@@ -68,15 +68,14 @@
         <dialog class="basketOpen" id="dialog"></dialog>
 
         <div class="ThankYou" id="ThankYou">
+            <button type="button" onclick="ThankYouclosed()">Close</button>
             <h2>Vielen Dank für Ihre Bestellung!</h2>
             <img class="thankyouimage" src="./assets/image/BestellungUnterwegs.png" alt="Thank You Image">
-            <p>Ihre Zahlung wurde erfolgreich verarbeitet</p>
-            <p>Ihre Bestellung wird nun zubereitet</p>
-            <button type="button" onclick="ThankYouclosed()">Close</button>
+            <p>Ihre Zahlung wurde erfolgreich verarbeitet.<br> Bestellung wird nun zubereitet<br>und ausgeliefert</p>
         </div>
 
         <button onclick="openDialog()" class="basketOpenWrapper" aria-label="Openshoppingcart">
-        <b id="basketCount" class="countby"></b>
+            <b id="basketCount" class="countby"></b>
             <img src="./assets/image/shoppingcar.png" alt="Shopping cart icon" class="shoppingcarticon">
         </button>
 

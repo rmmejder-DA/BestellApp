@@ -3,43 +3,42 @@ function menuItemTemplate(item, index) {
     let headlineObj = headline.find(h => h.id === index);
     if (headlineObj) {
         headlineHtml =
-            `<div class="${headlineObj.name.toLowerCase()}-headline">
-        <div class="headline-menu-item">
-        <img class="headline-image" src="${imagePath}${headlineObj.image}" alt="${headlineObj.name}">
-        <h2>${headlineObj.name}</h2>
-        </div>
-        </div>
-        `;
+        `<div class="${headlineObj.name.toLowerCase()}-headline">
+            <div class="headline-menu-item">
+            <img class="headline-image" src="${imagePath}${headlineObj.image}" alt="${headlineObj.name}">
+            <h2>${headlineObj.name}</h2>
+            </div>
+        </div>`;
     }
-    return `${headlineHtml}
-    <div class="line">
+    return `
+    ${headlineHtml}
     <div class="spacer">
     <div class="menu-item">
-        <img class="menu-item-image" src="${imagePath}${item.image}" alt="${item.name}">
+    <div class="menu-item-content">
         <h3>${item.name}</h3>
+        <img class="menu-item-image" src="${imagePath}${item.image}" alt="${item.name}">
+    </div>
         <p>${item.Beschreibung}</p>
         <span class="price">€ ${item.price}</span>
-        <div>
+    <div class="menu-item-buttons">
         <button class="add-to-cart" id="add-to-cart-${index}" onclick="addToCart(${index})">
         <p id="menuCount${index}" class="menucount">ADD</p>
         </button>
-        <button class="remove-from-cart" id="remove-from-cart-${index}" onclick="minus(${item.id})">
-        🗑
-        </button>
-        </div>
+        <button class="remove-from-cart" id="remove-from-cart-${index}" onclick="minus(${item.id})">🗑</button>
     </div>
+
     </div>
     </div>`;
 }
 
 function dialogTemplate() {
-    return `            <section class="dialogsection">
+    return `<section class="dialogsection">
                 <header class="basket_header">
                     <button class="close-basket-button" onclick="closeBasket()">✖</button>
                     <h2>Warenkorb</h2>
                 </header>
-                <div id="cart-empty-dialog" class="cart-empty">Warenkorb ist leer</div>
-                <div id="cart-items-dialog" class="cart-items"></div>
+                    <div id="cart-empty-dialog" class="cart-empty">Warenkorb ist leer</div>
+                    <div id="cart-items-dialog" class="cart-items"></div>
                 <footer class="basket_footer">
                     <div class="total-removeall">
                         <h3 id="total-price-dialog">Total 0.00 €</h3>
@@ -52,37 +51,45 @@ function dialogTemplate() {
 
 function basketTemplate() {
     return `<div class="basketPay">
-                    <header class="basket_header">
-                        <h2>Warenkorb</h2>
-                    </header>
-                    <div id="cart_empty" class="cart-empty">Warenkorb ist leer</div>
-                    <div id="cart-items" class="cart-items"></div>
-                    <footer class="basket_footer">
-                        <div class="total-removeall">
-                            <h3 id="total-price">Total 0.00 €</h3>
-                            <button type="button" onclick="removeAll()" class="remove-all-button" id="remove-all-button">Remove</button>
-                        </div>
-                        <button type="button" id="Payment" onclick="Pay()" class="payment-button">Pay</button>
-                    </footer>
-                </div>`;
+            <header class="basket_header">
+                <h2>Warenkorb</h2>
+            </header>
+                <div id="cart_empty" class="cart-empty">Warenkorb ist leer</div>
+                <div id="cart-items" class="cart-items"></div>
+            <footer class="basket_footer">
+                <div class="total-removeall">
+                <h3 id="total-price">Total 0.00 €</h3>
+                <button type="button" onclick="removeAll()" class="remove-all-button" id="remove-all-button">Remove</button>
+                </div>
+                <button type="button" id="Payment" onclick="Pay()" class="payment-button">Pay</button>
+            </footer>
+            </div>`;
 }
 
 function cartItemsTemplate(item) {
-    return `            <div class="cart-item">
-                <p>${item.name} x ${item.quantity}</p>
+    return `<div class="cart-item">
+                <div class="remove-quantity">
+                <button onclick="removeOneItem(${item.id})" class="remove-one-button">X</button>
+                <p>${item.quantity}x</p>
+                </div>
+                <p>${item.name}</p>
+            <div id="BtnBasket" class="BtnBasket">
                 <p>€ ${item.price}</p>
-                <div id="BtnBasket" class="BtnBasket">
-            <button onclick="plus(${item.id})">+</button>
-            <button onclick="minus(${item.id})">🗑</button>
+                <button onclick="plus(${item.id})">+</button>
+                <button onclick="minus(${item.id})">🗑</button>
             </div>
             </div>`;
 }
 
 function cartItemsDialogTemplate(item) {
     return `<div class="cart-item">
-                <p>${item.name} x ${item.quantity}</p>
+                <div class="remove-quantity">
+                <button onclick="removeOneItem(${item.id})" class="remove-one-button">X</button>
+                <p>${item.quantity}x</p>
+                </div>
+                <p>${item.name}</p>
+            <div id="BtnBasket" class="BtnBasket">
                 <p>€ ${item.price}</p>
-                <div id="BtnBasket" class="BtnBasket">
             <button onclick="plus(${item.id})">+</button>
             <button onclick="minus(${item.id})">🗑</button>
             </div>
