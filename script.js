@@ -86,6 +86,8 @@ function updateCartCount() {
         totalQuantity += item.quantity;
     });
     if (cartCount == null) return;
+    cartCount.textContent = totalQuantity;
+    cartCount.style.display = totalQuantity > 0 ? "block" : "none";
 }
 
 function updateMenuCount(id) {
