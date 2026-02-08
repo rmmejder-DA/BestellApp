@@ -11,7 +11,7 @@ let menu = [
         "image": "CheeseBurger.jpg",
         "name": "Cheese Burger",
         "price": 6.49,
-        "Beschreibung": "Köstlicher Burger mit geschmolzenem Cheddar-Käse,<br> Salat, Tomate und Zwiebeln."
+        "Beschreibung": "Köstlicher Burger mit geschmolzenem Cheddar Käse, Salat, Tomate und Zwiebeln."
     },
     {
         "id": 3,

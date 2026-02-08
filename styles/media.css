@@ -1,7 +1,8 @@
 @media (max-width:430px) {
-    .basketPay{
-        padding:unset;
+    .basketPay {
+        padding: unset;
     }
+
     .shoppingcartsectionOpen {
         width: 100% !important;
         height: 100%;
@@ -9,13 +10,11 @@
         border-radius: unset;
     }
 
-    .BigImage {
-        height: 250px;
-    }
-.menu-item-image {
+    .menu-item-image {
         width: 100% !important;
         height: 200px !important;
-}
+    }
+
     .burgerImage {
         bottom: 64px;
     }
@@ -49,18 +48,14 @@
         height: 30px;
     }
 
-    .headline-image{
+    .headline-image {
         width: 80px !important;
         height: 80px !important;
     }
-    .headline-menu-item {
-        height: 60px !important ;
-    }
-    p {
-        font-size: 16px;
-        text-align: center;
-    }
 
+    .headline-menu-item {
+        height: 60px !important;
+    }
     b {
         font-size: 18px;
     }
@@ -69,9 +64,11 @@
         margin: 0;
 
     }
-    .basket_header{
+
+    .basket_header {
         justify-content: space-evenly;
     }
+
     .basket_footer h3 {
         font-size: 16px;
     }
@@ -88,6 +85,11 @@
 }
 
 @media (max-width:600px) {
+    
+    .BigImage {
+        height: 288px!important;
+    }
+
     .basket span {
         width: 25px;
         height: 3px;
@@ -134,13 +136,18 @@
         height: 90px !important;
         margin: 10px 0;
     }
-
+    .burgerImage {
+        width: 160px!important;
+        height: 160px!important;
+        bottom: 82px!important;
+    }
     .basket_cart {
         position: static;
     }
+
     .headline-image {
-    width: 94px;
-    height: 94px;
+        width: 94px;
+        height: 94px;
     }
 }
 
@@ -176,18 +183,21 @@
         width: 550px;
         gap: 10px;
     }
+
     .menu-item-image {
         width: 400px;
         height: 200px !important;
     }
 
-     .headline-image {
+    .headline-image {
         width: 80px !important;
         height: 80px !important;
     }
-     .headline-menu-item {
-        height: 60px !important ;
+
+    .headline-menu-item {
+        height: 60px !important;
     }
+
     .add-to-cart-button {
         margin: 10px auto 10px auto;
     }
@@ -219,12 +229,10 @@
 }
 
 @media (max-width:1030px) {
-    .spacer {
-        justify-content: center;
-    }
     .menu-item {
         width: 90% !important;
     }
+
     .description-text {
         padding: 10px;
         width: 320px !important;
@@ -247,7 +255,8 @@
     }
 
     .spacer {
-        align-items: center;
+        display: flex;
+        justify-content: center;
     }
 
     .basketOpenWrapper {

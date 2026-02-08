@@ -1,6 +1,6 @@
 function menuItemTemplate(item, index) {
     let headlineHtml = "";
-    let headlineObj = headline.find(h => h.id === index);
+    let headlineObj = headlineFind(index);
     if (headlineObj) {
         headlineHtml =
         `<div class="${headlineObj.name.toLowerCase()}-headline">
@@ -17,9 +17,9 @@ function menuItemTemplate(item, index) {
     <div class="menu-item-content">
         <h3>${item.name}</h3>
         <img class="menu-item-image" src="${imagePath}${item.image}" alt="${item.name}">
+                <span class="price">€ ${item.price}</span>
     </div>
         <p>${item.Beschreibung}</p>
-        <span class="price">€ ${item.price}</span>
     <div class="menu-item-buttons">
         <button class="add-to-cart" id="add-to-cart-${index}" onclick="addToCart(${index})">
         <p id="menuCount${index}" class="menucount">ADD</p>

@@ -4,7 +4,7 @@ function FoodStore() {
 
     let dialogContainer = document.getElementById("dialog");
     dialogContainer.innerHTML += dialogTemplate();
-
+    
     let menuContainer = document.getElementById("menuContainer");
     menuContainer.innerHTML = "";
     for (let i = 0; i < menu.length; i++) {
@@ -15,6 +15,11 @@ function FoodStore() {
     closeBasket();
     updateCartUI();
     dialogUpdate();
+}
+
+function headlineFind (index) {
+    let headlineObj = headline.find(h => h.id === index);
+    return headlineObj;
 }
 
 function Pay() {
@@ -33,37 +38,40 @@ function Pay() {
 }
 
 function plus(id) {
-    let cartItem = cart.find(item => item.id === id);
+    let cartItem = cart.find(item => item.id === id);// Suchen des Artikels im Warenkorb anhand der ID
     if (cartItem) {
         cartItem.quantity += 1;
-        updateCartCount();
-        updateCartUI();
-        dialogUpdate();
-        updateMenuCount(id);
+        if (cartItem.quantity <= 0) {
+            cart = cart.filter(item => item.id !== id);
+        }
     }
+    updateCartCount();
+    updateCartUI();
+    dialogUpdate();
+    updateMenuCount(id);
 }
 
 function minus(id) {
-    let cartItem = cart.find(item => item.id === id);
+    let cartItem = cart.find(item => item.id === id);// Suchen des Artikels im Warenkorb anhand der ID
     if (cartItem) {
         cartItem.quantity -= 1;
         if (cartItem.quantity <= 0) {
             cart = cart.filter(item => item.id !== id);
         }
-        updateCartCount();
-        updateCartUI();
-        dialogUpdate();
-        updateMenuCount(id);
     }
+    updateCartCount();
+    updateCartUI();
+    dialogUpdate();
+    updateMenuCount(id);
 }
 
 function addToCart(index) {
     let item = menu[index];
-    let cartItem = cart.find(ci => ci.id === item.id);
+    let cartItem = cart.filter(cartItem => cartItem.id === item.id)[0];
     if (cartItem) {
         cartItem.quantity += 1;
     } else {
-        cart.push({ ...item, quantity: 1 });
+        cart.push({ id: item.id, name: item.name, price: item.price, quantity: 1 });
     }
     updateCartCount();
     updateCartUI();
@@ -72,29 +80,30 @@ function addToCart(index) {
 }
 
 function updateCartCount() {
-    let totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+    let totalQuantity = 0;
     let cartCount = document.getElementById("basketCount");
-    if (cartCount) {
-        cartCount.textContent = totalQuantity;
-        cart.length > 0 ? cartCount.style.display = "block" : cartCount.style.display = "none";
-    }
+    cart.findIndex(item => {
+        totalQuantity += item.quantity;
+    });
+    if (cartCount == null) return;
 }
 
 function updateMenuCount(id) {
-    let menuItem = menu.find(item => item.id === id);
+    let menuItem = menu.filter(item => item.id === id)[0];
     if (!menuItem) return;
     let menuIndex = menu.indexOf(menuItem);
     let menuCountElement = document.getElementById(`menuCount${menuIndex}`);
-    let cartItem = cart.find(ci => ci.id === id);
+    let cartItem = cart.filter(cartItem => cartItem.id === id)[0];
     if (menuCountElement) {
+        //stackoverflow gefunden, um die Anzahl der Artikel im Menü anzuzeigen oder "ADD" wenn keine Artikel im Warenkorb sind //
         menuCountElement.textContent = `${cartItem ? cartItem.quantity : 'ADD'}`;
     }
 }
 
 function removeAll() {
     cart = [];
-    menu.forEach(item => {
-        updateMenuCount(item.id);
+    menu.filter(item => {
+    updateMenuCount(item.id);// Aktualisieren der Anzeige für jedes Menüelement
     });
     updateCartCount();
     updateCartUI();
@@ -163,7 +172,7 @@ function ElementDialogNone() {
         });
     }
 }
-
+//Stars Bewertung im Internet gefunden
 function setupStarRating() {
     let stars = document.querySelectorAll('.star');
     let output = document.getElementById('rating-output');
