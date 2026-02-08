@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerichte Auswahl</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f8f8;
+        }
+        h1 {
+            color: #333;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+        .pizza { background-color: #e74c3c; }
+        .salad { background-color: #27ae60; }
+        .burger { background-color: #f39c12; }
+        #ausgabe {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Wähle dein Gericht</h1>
+
+    <button class="btn pizza" onclick="zeigeGericht('Pizza')">Pizza</button>
+    <button class="btn salad" onclick="zeigeGericht('Salad')">Salad</button>
+    <button class="btn burger" onclick="zeigeGericht('Burger')">Burger</button>
+
+    <div id="ausgabe"></div>
+
+    <script>
+        // Funktion zur Anzeige des gewählten Gerichts
+        function zeigeGericht(gericht) {
+            const ausgabe = document.getElementById('ausgabe');
+            ausgabe.textContent = `Du hast ${gericht} gewählt.`;
+        }
+    </script>
+
+</body>
+</html>

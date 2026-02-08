@@ -1,17 +1,10 @@
 function menuItemTemplate(item, index) {
-    let headlineHtml = "";
-    let headlineObj = headlineFind(index);
-    if (headlineObj) {
-        headlineHtml =
-        `<div class="${headlineObj.name.toLowerCase()}-headline">
+    return `<div class="${item.category.toLowerCase()}-headline">
             <div class="headline-menu-item">
-            <img class="headline-image" src="${imagePath}${headlineObj.image}" alt="${headlineObj.name}">
-            <h2>${headlineObj.name}</h2>
+            <img class="headline-image" src="${imagePath}${item.Icon}" alt="${item.name}">
+            <h2>${item.category}</h2>
             </div>
-        </div>`;
-    }
-    return `
-    ${headlineHtml}
+        </div>
     <div class="spacer">
     <div class="menu-item">
     <div class="menu-item-content">
@@ -30,7 +23,6 @@ function menuItemTemplate(item, index) {
     </div>
     </div>`;
 }
-
 function dialogTemplate() {
     return `<section class="dialogsection">
                 <header class="basket_header">
@@ -44,7 +36,7 @@ function dialogTemplate() {
                         <h3 id="total-price-dialog">Total 0.00 €</h3>
                         <button type="button" onclick="removeAll()" class="remove-all-button" id="remove-all-button-dialog">Remove</button>
                     </div>
-                    <button type="button" id="PayBtn-dialog" onclick="Pay()" class="payment-button">Pay</button>
+                    <button type="button" id="PayBtn-dialog" onclick="pay()" class="payment-button">Pay</button>
                 </footer>
             </section>`;
 }
@@ -61,7 +53,7 @@ function basketTemplate() {
                 <h3 id="total-price">Total 0.00 €</h3>
                 <button type="button" onclick="removeAll()" class="remove-all-button" id="remove-all-button">Remove</button>
                 </div>
-                <button type="button" id="Payment" onclick="Pay()" class="payment-button">Pay</button>
+                <button type="button" id="Payment" onclick="pay()" class="payment-button">Pay</button>
             </footer>
             </div>`;
 }

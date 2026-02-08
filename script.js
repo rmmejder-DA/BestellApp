@@ -1,11 +1,11 @@
-function FoodStore() {
-    let basket = document.getElementById("basket");
+function foodStore() {
+    const basket = document.getElementById("basket");
     basket.innerHTML += basketTemplate();
 
-    let dialogContainer = document.getElementById("dialog");
+    const dialogContainer = document.getElementById("dialog");
     dialogContainer.innerHTML += dialogTemplate();
-    
-    let menuContainer = document.getElementById("menuContainer");
+
+    const menuContainer = document.getElementById("menuContainer");
     menuContainer.innerHTML = "";
     for (let i = 0; i < menu.length; i++) {
         menuContainer.innerHTML += menuItemTemplate(menu[i], i);
@@ -17,14 +17,10 @@ function FoodStore() {
     dialogUpdate();
 }
 
-function headlineFind (index) {
-    let headlineObj = headline.find(h => h.id === index);
-    return headlineObj;
-}
 
-function Pay() {
+function pay() {
     cart = []; // Leeren des Warenkorbs
-    let ThankYou = document.getElementById("ThankYou");
+    const ThankYou = document.getElementById("ThankYou");
     if (ThankYou) {
         ThankYou.style.display = "block";
     }
@@ -67,7 +63,7 @@ function minus(id) {
 
 function addToCart(index) {
     let item = menu[index];
-    let cartItem = cart.filter(cartItem => cartItem.id === item.id)[0];
+    let cartItem = cart.filter(cartItem => cartItem.id === item.id)[0];// Suchen des Artikels im Warenkorb anhand der ID
     if (cartItem) {
         cartItem.quantity += 1;
     } else {
@@ -105,7 +101,7 @@ function updateMenuCount(id) {
 function removeAll() {
     cart = [];
     menu.filter(item => {
-    updateMenuCount(item.id);// Aktualisieren der Anzeige für jedes Menüelement
+        updateMenuCount(item.id);// Aktualisieren der Anzeige für jedes Menüelement
     });
     updateCartCount();
     updateCartUI();
@@ -118,14 +114,14 @@ function updateCartUI() {
     cart.findIndex(item => {
         totalPrice += item.price * item.quantity;
     });
-    ElementCartNone();
+    elementCartNone();
     totalPriceElement.textContent = `Total ${totalPrice.toFixed(2)} €`;
 }
 
-function ElementCartNone() {
+function elementCartNone() {
     let cartItemsContainer = document.getElementById("cart-items");
-    let cartEmptyMessage = document.getElementById("cart_empty");
-    let removeAllButton = document.getElementById("remove-all-button");
+    const cartEmptyMessage = document.getElementById("cart_empty");
+    const removeAllButton = document.getElementById("remove-all-button");
     cartItemsContainer.innerHTML = "";
     if (cart.length === 0) {
         cartEmptyMessage.style.display = "block";
@@ -149,14 +145,14 @@ function dialogUpdate() {
     cart.findIndex(item => {// Alle Artikel im Warenkorb durchgehen
         totalPrice += item.price * item.quantity;
     });
-    ElementDialogNone();
+    elementDialogNone();
     totalPriceDialog.textContent = `Total ${totalPrice.toFixed(2)} €`;
 }
 
-function ElementDialogNone() {
+function elementDialogNone() {
     let cartItemsDialog = document.getElementById("cart-items-dialog");
     let cartEmptyDialog = document.getElementById("cart-empty-dialog");
-    let removeAllDialog = document.getElementById("remove-all-button-dialog");
+    const removeAllDialog = document.getElementById("remove-all-button-dialog");
     cartItemsDialog.innerHTML = "";
     if (cart.length === 0) {
         cartEmptyDialog.style.display = "block";
@@ -228,15 +224,15 @@ function openDialog() {
     dialogUpdate();
 }
 
-function ThankYouclosed() {
-    let ThankYou = document.getElementById("ThankYou");
+function thankYouclosed() {
+    const ThankYou = document.getElementById("ThankYou");
     ThankYou.style.display = "none";
     updateCartUI();
     dialogUpdate();
 }
 
 function closeBasket() {
-    let basket = document.getElementById("dialog");
+    const basket = document.getElementById("dialog");
     if (basket && typeof basket.close === "function") {
         basket.close();
     }
