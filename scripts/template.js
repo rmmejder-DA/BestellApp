@@ -1,11 +1,14 @@
-function menuItemTemplate(item, index) {
-    return `<div class="${item.category.toLowerCase()}-headline">
+function categoryHeadlineTemplate(category, Icon) {
+    return `<div id="headlineid" class="${category.toLowerCase()}-headline">
             <div class="headline-menu-item">
-            <img class="headline-image" src="${imagePath}${item.Icon}" alt="${item.name}">
-            <h2>${item.category}</h2>
+            <img class="headline-image" src="${imagePath}${Icon}" alt="${category}">
+            <h2>${category}</h2>
             </div>
-        </div>
-    <div class="spacer">
+        </div>`;
+}
+//.toLowerCase() // Wandelt den Kategorienamen in Kleinbuchstaben um, um die CSS-Klasse zu generieren
+function menuItemTemplate(item, index) {
+        return `<div class="spacer">
     <div class="menu-item">
     <div class="menu-item-content">
         <h3>${item.name}</h3>
@@ -17,12 +20,13 @@ function menuItemTemplate(item, index) {
         <button class="add-to-cart" id="add-to-cart-${index}" onclick="addToCart(${index})">
         <p id="menuCount${index}" class="menucount">ADD</p>
         </button>
-        <button class="remove-from-cart" id="remove-from-cart-${index}" onclick="minus(${item.id})">🗑</button>
+        <button class="remove-from-cart" id="remove-from-cart-${index}" onclick="minus(${index})">🗑</button>
     </div>
 
     </div>
     </div>`;
 }
+
 function dialogTemplate() {
     return `<section class="dialogsection">
                 <header class="basket_header">

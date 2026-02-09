@@ -1,95 +1,86 @@
 let menu = [
-    {   category: "Burger",
-        Icon : "BurgerIcon.png",
+    {
+        category: "Burger",
+        Icon: "BurgerIcon.png",
         id: 1,
+    },
+    {
         image: "SmokeBurger.jpg",
         name: "Classic Burger",
         price: 5.99,
         Beschreibung: "Saftiger Rindfleisch-Patty mit frischem Salat,<br> Tomate, Zwiebeln und unserer speziellen Sauce."
     },
-    {   category: "Burger",
-        Icon : "BurgerIcon.png",
-        id: 2,
+    {
         image: "CheeseBurger.jpg",
         name: "Cheese Burger",
         price: 6.49,
         Beschreibung: "Köstlicher Burger mit geschmolzenem Cheddar Käse, Salat, Tomate und Zwiebeln."
     },
-    {   category: "Burger",
-        Icon : "BurgerIcon.png",
-        id: 3,
+    {
         image: "BaconBurger.jpg",
         name: "Bacon Burger",
         price: 6.99,
         Beschreibung: "Leckerer Burger mit knusprigem Bacon,<br> Salat, Tomate, Zwiebeln und BBQ-Sauce."
     },
-    {   category: "Burger",
-        Icon : "BurgerIcon.png",
-        id: 4,
+    {
         image: "DoubleBurger.jpg",
         name: "Double Burger",
         price: 7.49,
         Beschreibung: "Doppelter Genuss mit zwei Rindfleisch-Patties,<br> Salat, Tomate, Zwiebeln und<br> unserer speziellen Sauce."
     },
-    {   category: "Pizza",
-        Icon : "PizzaIcon.png",
-        id: 5,
+    {
+        category: "Pizza",
+        Icon: "PizzaIcon.png",
+        id: 2,
+    },
+    {
         image: "Margherita.jpg",
         name: "Margherita",
         price: 4.99,
         Beschreibung: "Klassische Pizza mit<br> Tomatensauce und Mozzarella."
     },
-    {   category: "Pizza",
-        Icon : "PizzaIcon.png",
-        id: 6,
+    {
         image: "Pepperoni.jpg",
         name: "Pepperoni",
         price: 5.99,
         Beschreibung: "Würzige Pepperoni-Scheiben<br> auf Tomatensauce und Käse."
     },
-    {   category: "Pizza",
-        Icon : "PizzaIcon.png",
-        id: 7,
+    {
         image: "Vegetarian.jpg",
         name: "Vegetarian",
         price: 5.49,
         Beschreibung: "Bunte Auswahl an frischem Gemüse <br>auf Tomatensauce und Käse."
     },
-    {   category: "Pizza",
-        Icon : "PizzaIcon.png",
-        id: 8,
+    {
         image: "BBQChicken.png",
         name: "BBQ Chicken",
         price: 6.49,
         Beschreibung: "Gegrilltes Hähnchen mit BBQ-Sauce,<br> Zwiebeln und Käse."
     },
-    {   category: "Salat",
-        Icon : "SaladIcon.png",
-        id: 9,
+    {
+        category: "Salat",
+        Icon: "SaladIcon.png",
+        id: 3,
+    },
+    {
         image: "CaesarSalad.jpg",
         name: "Caesar Salat",
         price: 4.99,
         Beschreibung: "Frischer Römersalat mit Caesar-Dressing,<br> Croutons und Parmesan."
     },
-    {   category: "Salat",
-        Icon : "SaladIcon.png",
-        id: 10,
+    {
         image: "GreekSalad.jpg",
         name: "Griechischer Salat",
         price: 5.49,
         Beschreibung: "Tomaten, Gurken, Oliven, Feta-Käse und<br> rote Zwiebeln mit Olivenöl-Dressing."
     },
-    {   category: "Salat",
-        Icon : "SaladIcon.png",
-        id: 11,
+    {
         image: "GardenSalad.jpg",
         name: "Garten Salat",
         price: 4.49,
         Beschreibung: "Gemischter Salat mit frischem Gemüse und<br> einem leichten Vinaigrette-Dressing."
     },
-    {   category: "Salat",
-        Icon : "SaladIcon.png",
-        id: 12,
+    {
         image: "CornSalad.jpg",
         name: "Corn Salat",
         price: 6.99,

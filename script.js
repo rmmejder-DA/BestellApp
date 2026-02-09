@@ -8,15 +8,19 @@ function foodStore() {
     const menuContainer = document.getElementById("menuContainer");
     menuContainer.innerHTML = "";
     for (let i = 0; i < menu.length; i++) {
-        menuContainer.innerHTML += menuItemTemplate(menu[i], i);
+        const item = menu[i];
+        if (item.category && item.Icon && item.id && !item.name) {
+            menuContainer.innerHTML += categoryHeadlineTemplate(item.category, item.Icon);
+        } else if (item.name) {
+            menuContainer.innerHTML += menuItemTemplate(item, i);
+        }
     }
     setupStarRating();
     updateCartCount();
     closeBasket();
-    updateCartUI();
+    updatePrice();
     dialogUpdate();
 }
-
 
 function pay() {
     cart = []; // Leeren des Warenkorbs
@@ -25,12 +29,13 @@ function pay() {
         ThankYou.style.display = "block";
     }
     menu.filter(item => {// Alle Artikel im Menü durchgehen
-        updateMenuCount(item.id);// Aktualisieren der Anzeige für jedes Menüelement
+        updateMenuCount(item.name);// Aktualisieren der Anzeige für jedes Menüelement
     });
+    elementDialogNone();
     updateCartCount();
-    closeBasket();
-    updateCartUI();
+    updatePrice();
     dialogUpdate();
+    closeBasket();
 }
 
 function plus(id) {
@@ -41,10 +46,11 @@ function plus(id) {
             cart = cart.filter(item => item.id !== id);
         }
     }
+    updateMenuCount(menu[id].name);
+    elementDialogNone();
     updateCartCount();
-    updateCartUI();
+    updatePrice();
     dialogUpdate();
-    updateMenuCount(id);
 }
 
 function minus(id) {
@@ -55,30 +61,32 @@ function minus(id) {
             cart = cart.filter(item => item.id !== id);
         }
     }
+    updateMenuCount(menu[id].name);
+    elementDialogNone();
     updateCartCount();
-    updateCartUI();
+    updatePrice();
     dialogUpdate();
-    updateMenuCount(id);
 }
 
 function addToCart(index) {
-    let item = menu[index];
-    let cartItem = cart.filter(cartItem => cartItem.id === item.id)[0];// Suchen des Artikels im Warenkorb anhand der ID
+    let item = menu[index];// Sucht das Menüelement basierend auf dem Index
+    let cartItem = cart.find(cartItem => cartItem.name === item.name);
     if (cartItem) {
         cartItem.quantity += 1;
     } else {
-        cart.push({ id: item.id, name: item.name, price: item.price, quantity: 1 });
+        cart.push({ name: item.name, price: item.price, quantity: 1, id: index });
     }
+
     updateCartCount();
-    updateCartUI();
+    updatePrice();
     dialogUpdate();
-    updateMenuCount(item.id);
+    updateMenuCount(item.name);
 }
 
 function updateCartCount() {
     let totalQuantity = 0;
-    let cartCount = document.getElementById("basketCount");
-    cart.findIndex(item => {
+    const cartCount = document.getElementById("basketCount");
+    cart.filter(item => {
         totalQuantity += item.quantity;
     });
     if (cartCount == null) return;
@@ -86,12 +94,12 @@ function updateCartCount() {
     cartCount.style.display = totalQuantity > 0 ? "block" : "none";
 }
 
-function updateMenuCount(id) {
-    let menuItem = menu.filter(item => item.id === id)[0];
-    if (!menuItem) return;
-    let menuIndex = menu.indexOf(menuItem);
-    let menuCountElement = document.getElementById(`menuCount${menuIndex}`);
-    let cartItem = cart.filter(cartItem => cartItem.id === id)[0];
+function updateMenuCount(itemName) {
+    const menuItem = menu.find(item => item.name === itemName);// Sucht das Menüelement basierend auf dem Namen
+    if (!menuItem) return;// Wenn kein Menüelement gefunden wird, Funktion verlassen
+    let menuIndex = menu.indexOf(menuItem);// Findet den Index des Menüelements im Menü-Array
+    let menuCountElement = document.getElementById(`menuCount${menuIndex}`);//
+    let cartItem = cart.find(cartItem => cartItem.name === itemName);// Sucht das entsprechende Element im Warenkorb basierend auf dem Namen
     if (menuCountElement) {
         //stackoverflow gefunden, um die Anzahl der Artikel im Menü anzuzeigen oder "ADD" wenn keine Artikel im Warenkorb sind //
         menuCountElement.textContent = `${cartItem ? cartItem.quantity : 'ADD'}`;
@@ -99,19 +107,19 @@ function updateMenuCount(id) {
 }
 
 function removeAll() {
-    cart = [];
+    cart = []; // Leeren des Warenkorbs
     menu.filter(item => {
-        updateMenuCount(item.id);// Aktualisieren der Anzeige für jedes Menüelement
+        updateMenuCount(item.name);// Aktualisieren der Anzeige für jedes Menüelement
     });
     updateCartCount();
-    updateCartUI();
+    updatePrice();
     dialogUpdate();
 }
 
-function updateCartUI() {
+function updatePrice() {
     let totalPriceElement = document.getElementById("total-price");
     let totalPrice = 0;
-    cart.findIndex(item => {
+    cart.filter(item => {// Alle Artikel im Warenkorb durchgehen
         totalPrice += item.price * item.quantity;
     });
     elementCartNone();
@@ -133,7 +141,7 @@ function elementCartNone() {
         removeAllButton.style.display = "inline-block";
         document.getElementById("Payment").disabled = false;
         document.getElementById("Payment").style.cursor = "pointer";
-        cart.forEach(item => {
+        cart.findIndex(item => {
             cartItemsContainer.innerHTML += cartItemsTemplate(item);
         });
     }
@@ -142,7 +150,7 @@ function elementCartNone() {
 function dialogUpdate() {
     let totalPriceDialog = document.getElementById("total-price-dialog");
     let totalPrice = 0;
-    cart.findIndex(item => {// Alle Artikel im Warenkorb durchgehen
+    cart.forEach(item => {// Alle Artikel im Warenkorb durchgehen
         totalPrice += item.price * item.quantity;
     });
     elementDialogNone();
@@ -150,8 +158,8 @@ function dialogUpdate() {
 }
 
 function elementDialogNone() {
-    let cartItemsDialog = document.getElementById("cart-items-dialog");
-    let cartEmptyDialog = document.getElementById("cart-empty-dialog");
+    const cartItemsDialog = document.getElementById("cart-items-dialog");
+    const cartEmptyDialog = document.getElementById("cart-empty-dialog");
     const removeAllDialog = document.getElementById("remove-all-button-dialog");
     cartItemsDialog.innerHTML = "";
     if (cart.length === 0) {
@@ -165,7 +173,7 @@ function elementDialogNone() {
         removeAllDialog.style.display = "inline-block";
         document.getElementById("PayBtn-dialog").disabled = false;
         document.getElementById("PayBtn-dialog").style.cursor = "pointer";
-        cart.forEach(item => {
+        cart.findIndex(item => {
             cartItemsDialog.innerHTML += cartItemsDialogTemplate(item);
         });
     }
@@ -227,7 +235,6 @@ function openDialog() {
 function thankYouclosed() {
     const ThankYou = document.getElementById("ThankYou");
     ThankYou.style.display = "none";
-    updateCartUI();
     dialogUpdate();
 }
 
@@ -240,9 +247,9 @@ function closeBasket() {
 }
 
 function removeOneItem(itemId) {
-    cart = cart.filter(item => item.id !== itemId);
-    updateMenuCount(itemId);
+    cart = cart.filter(item => item.id !== itemId);// Entfernt den Artikel mit der angegebenen ID aus dem Warenkorb
+    updateMenuCount(menu[itemId].name);
     updateCartCount();
-    updateCartUI();
+    updatePrice();
     dialogUpdate();
 }
