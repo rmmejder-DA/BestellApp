@@ -229,7 +229,7 @@ function starsaktiv() {
     });
 }
 
-function ratingDeineObjektID(rating) {
+function ratingObjektID(rating) {
     let ratingElement = document.getElementById('rating');
     rating = Math.max(0, Math.min(5, rating || 0));
     if (ratingElement) {
