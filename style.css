@@ -212,7 +212,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #ec731c;
-    padding: 30px;
+    padding: 48px;
     border-radius: 15px;
     box-shadow: 0 4px 8px 0 #00000040;
     z-index: 2000;
@@ -232,15 +232,12 @@
 }
 
 .ThankYou button {
-    position: fixed;
-    right: 10px;
-    top: 309px;
     cursor: pointer;
     color: white;
     background-color: transparent;
     border: none;
-    padding: 15px;
-    border-radius: 10px;
+    padding: 5px;
+    border-radius: 5px;
     font-size: 16px;
 }
 
