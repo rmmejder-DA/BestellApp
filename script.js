@@ -1,12 +1,14 @@
 function foodStore() {
     const basket = document.getElementById("basket");
     basket.innerHTML += basketTemplate();
-
     const dialogContainer = document.getElementById("dialog");
     dialogContainer.innerHTML += dialogTemplate();
-
     const menuContainer = document.getElementById("menuContainer");
     menuContainer.innerHTML = "";
+    foodStoreUpdate();
+}
+
+function foodStoreUpdate() {
     for (let i = 0; i < menu.length; i++) {
         const item = menu[i];
         if (item.category && item.Icon && item.id && !item.name) {
@@ -15,6 +17,10 @@ function foodStore() {
             menuContainer.innerHTML += menuItemTemplate(item, i);
         }
     }
+    Update();
+}
+
+function Update() {
     setupStarRating();
     updateCartCount();
     closeBasket();
@@ -76,7 +82,6 @@ function addToCart(index) {
     } else {
         cart.push({ name: item.name, price: item.price, quantity: 1, id: index });
     }
-
     updateCartCount();
     updatePrice();
     dialogUpdate();
@@ -137,14 +142,21 @@ function elementCartNone() {
         document.getElementById("Payment").disabled = true;
         document.getElementById("Payment").style.cursor = "not-allowed";
     } else {
-        cartEmptyMessage.style.display = "none";
-        removeAllButton.style.display = "inline-block";
-        document.getElementById("Payment").disabled = false;
-        document.getElementById("Payment").style.cursor = "pointer";
-        cart.findIndex(item => {
-            cartItemsContainer.innerHTML += cartItemsTemplate(item);
-        });
+        ifElseBasket();
     }
+}
+
+function ifElseBasket() {
+    const cartEmptyMessage = document.getElementById("cart_empty");
+    const removeAllButton = document.getElementById("remove-all-button");
+    let cartItemsContainer = document.getElementById("cart-items");
+    cartEmptyMessage.style.display = "none";
+    removeAllButton.style.display = "inline-block";
+    document.getElementById("Payment").disabled = false;
+    document.getElementById("Payment").style.cursor = "pointer";
+    cart.findIndex(item => {
+        cartItemsContainer.innerHTML += cartItemsTemplate(item);
+    });
 }
 
 function dialogUpdate() {
@@ -169,14 +181,21 @@ function elementDialogNone() {
         document.getElementById("PayBtn-dialog").style.cursor = "unset";
     }
     else {
-        cartEmptyDialog.style.display = "none";
-        removeAllDialog.style.display = "inline-block";
-        document.getElementById("PayBtn-dialog").disabled = false;
-        document.getElementById("PayBtn-dialog").style.cursor = "pointer";
-        cart.findIndex(item => {
-            cartItemsDialog.innerHTML += cartItemsDialogTemplate(item);
-        });
+        ifElseDialog();
     }
+}
+
+function ifElseDialog() {
+    const cartEmptyDialog = document.getElementById("cart-empty-dialog");
+    const removeAllDialog = document.getElementById("remove-all-button-dialog");
+    let cartItemsDialog = document.getElementById("cart-items-dialog");
+    cartEmptyDialog.style.display = "none";
+    removeAllDialog.style.display = "inline-block";
+    document.getElementById("PayBtn-dialog").disabled = false;
+    document.getElementById("PayBtn-dialog").style.cursor = "pointer";
+    cart.findIndex(item => {
+        cartItemsDialog.innerHTML += cartItemsDialogTemplate(item);
+    });
 }
 //Stars Bewertung im Internet gefunden
 function setupStarRating() {
