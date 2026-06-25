@@ -6,6 +6,7 @@ function foodStore() {
     const menuContainer = document.getElementById("menuContainer");
     menuContainer.innerHTML = "";
     foodStoreUpdate();
+    initializeLegalFeatures();
 }
 
 function foodStoreUpdate() {
@@ -271,4 +272,85 @@ function removeOneItem(itemId) {
     updateCartCount();
     updatePrice();
     dialogUpdate();
+}
+
+const COOKIE_PREFERENCES_KEY = "bestellappCookiePreferences";
+
+function initializeLegalFeatures() {
+    const consent = getCookieConsent();
+    const cookieBanner = document.getElementById("cookieBanner");
+    if (!cookieBanner) return;
+    cookieBanner.style.display = consent ? "none" : "flex";
+}
+
+function getCookieConsent() {
+    const savedPreferences = localStorage.getItem(COOKIE_PREFERENCES_KEY);
+    if (!savedPreferences) return null;
+    try {
+        return JSON.parse(savedPreferences);
+    } catch (_error) {
+        return null;
+    }
+}
+
+function setCookieConsent(preferences) {
+    localStorage.setItem(COOKIE_PREFERENCES_KEY, JSON.stringify(preferences));
+    const cookieBanner = document.getElementById("cookieBanner");
+    if (cookieBanner) {
+        cookieBanner.style.display = "none";
+    }
+}
+
+function acceptAllCookies() {
+    setCookieConsent({
+        necessary: true,
+        analytics: true,
+        savedAt: new Date().toISOString()
+    });
+    closeLegalDialog("cookiePreferencesDialog");
+}
+
+function acceptEssentialCookies() {
+    setCookieConsent({
+        necessary: true,
+        analytics: false,
+        savedAt: new Date().toISOString()
+    });
+    closeLegalDialog("cookiePreferencesDialog");
+}
+
+function openImprintDialog() {
+    const imprintDialog = document.getElementById("imprintDialog");
+    if (imprintDialog && typeof imprintDialog.showModal === "function") {
+        imprintDialog.showModal();
+    }
+}
+
+function openCookiePreferencesDialog() {
+    const consent = getCookieConsent();
+    const analyticsCheckbox = document.getElementById("analyticsCookies");
+    if (analyticsCheckbox) {
+        analyticsCheckbox.checked = consent ? Boolean(consent.analytics) : false;
+    }
+    const preferencesDialog = document.getElementById("cookiePreferencesDialog");
+    if (preferencesDialog && typeof preferencesDialog.showModal === "function") {
+        preferencesDialog.showModal();
+    }
+}
+
+function saveCookiePreferences() {
+    const analyticsCheckbox = document.getElementById("analyticsCookies");
+    setCookieConsent({
+        necessary: true,
+        analytics: analyticsCheckbox ? analyticsCheckbox.checked : false,
+        savedAt: new Date().toISOString()
+    });
+    closeLegalDialog("cookiePreferencesDialog");
+}
+
+function closeLegalDialog(dialogId) {
+    const dialog = document.getElementById(dialogId);
+    if (dialog && typeof dialog.close === "function") {
+        dialog.close();
+    }
 }

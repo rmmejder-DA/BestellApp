@@ -25,7 +25,8 @@
     }
 
     .footer_links {
-        display: none;
+        display: flex;
+        gap: 4px;
     }
 
     .LogoLinksHeader {
@@ -76,6 +77,51 @@
     .remove-all-button {
         padding: 5px 5px;
     }
+
+    .footer-link-button {
+        font-size: 14px;
+        padding: 4px 6px;
+    }
+
+    .cookie-banner {
+        bottom: 8px;
+        width: calc(100% - 16px);
+        padding: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cookie-banner p {
+        font-size: 14px;
+    }
+
+    .cookie-banner-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .basketOpen {
+        width: calc(100vw - 12px);
+        height: calc(100vh - 12px);
+        max-height: calc(100vh - 12px);
+        border-radius: 10px;
+    }
+
+    .ThankYou {
+        width: calc(100vw - 16px);
+        max-height: calc(100vh - 16px);
+        padding: 20px 14px;
+        border-radius: 10px;
+    }
+
+    .legal-dialog {
+        width: calc(100vw - 16px);
+        max-height: calc(100vh - 16px);
+    }
+
+    .legal-dialog-content {
+        max-height: calc(100vh - 120px);
+    }
 }
 
 @media (max-width:500px) {
@@ -117,6 +163,11 @@
     }
 
     a {
+        font-size: 16px;
+        padding: 5px 8px;
+    }
+
+    .footer-link-button {
         font-size: 16px;
         padding: 5px 8px;
     }

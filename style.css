@@ -171,6 +171,8 @@
     width: 400px;
     height: 630px;
     margin: auto;
+    max-width: calc(100vw - 24px);
+    max-height: calc(100vh - 24px);
     background-color: #363534;
 }
 
@@ -216,6 +218,9 @@
     border-radius: 15px;
     box-shadow: 0 4px 8px 0 #00000040;
     z-index: 2000;
+    width: min(620px, calc(100vw - 24px));
+    max-height: calc(100vh - 24px);
+    overflow: auto;
 }
 
 .ThankYou h2 {

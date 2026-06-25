@@ -88,11 +88,58 @@
         <div class="footer_container">
             <a>&copy; 2025 BurgerHaus</a>
             <div class="footer_links">
-                <a href="javascript:void(0)" role="button">Imprint</a>
-                <a href="javascript:void(0)" role="button">Cookies Preferences</a>
+                <button type="button" class="footer-link-button" onclick="openImprintDialog()">Imprint</button>
+                <button type="button" class="footer-link-button" onclick="openCookiePreferencesDialog()">Cookies Preferences</button>
             </div>
         </div>
     </footer>
+
+    <div id="cookieBanner" class="cookie-banner" aria-live="polite">
+        <p>
+            Wir nutzen notwendige Cookies, damit die BestellApp funktioniert. Optionale Cookies helfen uns, die Nutzung zu verbessern.
+        </p>
+        <div class="cookie-banner-actions">
+            <button type="button" class="cookie-btn cookie-btn-secondary" onclick="openCookiePreferencesDialog()">Einstellungen</button>
+            <button type="button" class="cookie-btn cookie-btn-secondary" onclick="acceptEssentialCookies()">Nur notwendige</button>
+            <button type="button" class="cookie-btn cookie-btn-primary" onclick="acceptAllCookies()">Alle akzeptieren</button>
+        </div>
+    </div>
+
+    <dialog id="imprintDialog" class="legal-dialog" aria-labelledby="imprint-title">
+        <div class="legal-dialog-header">
+            <h3 id="imprint-title">Impressum</h3>
+            <button type="button" class="legal-close" onclick="closeLegalDialog('imprintDialog')" aria-label="Impressum schliessen">x</button>
+        </div>
+        <div class="legal-dialog-content">
+            <p><strong>Angaben gemaess § 5 TMG</strong></p>
+            <p>
+                Max Mejder<br>
+                Almendorfer Str 15<br>
+                36100 Petersberg
+            </p>
+        </div>
+    </dialog>
+
+    <dialog id="cookiePreferencesDialog" class="legal-dialog" aria-labelledby="cookie-title">
+        <div class="legal-dialog-header">
+            <h3 id="cookie-title">Cookie Preferences</h3>
+            <button type="button" class="legal-close" onclick="closeLegalDialog('cookiePreferencesDialog')" aria-label="Cookie-Dialog schliessen">x</button>
+        </div>
+        <div class="legal-dialog-content">
+            <p>Hier kannst du festlegen, welche Cookies gespeichert werden duerfen.</p>
+            <label class="cookie-option">
+                <input type="checkbox" checked disabled>
+                Notwendige Cookies (immer aktiv)
+            </label>
+            <label class="cookie-option">
+                <input id="analyticsCookies" type="checkbox">
+                Optionale Analyse-Cookies
+            </label>
+            <div class="cookie-dialog-actions">
+                <button type="button" class="cookie-btn cookie-btn-secondary" onclick="saveCookiePreferences()">Speichern</button>
+            </div>
+        </div>
+    </dialog>
 </body>
 
 </html>
